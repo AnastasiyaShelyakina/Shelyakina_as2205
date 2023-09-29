@@ -83,6 +83,7 @@ Pipe enter_truba()
 	Pipe tr;
 	cout << "Enter the name of the pipe: ";
 	cin.ignore();
+	cin >> ws;
 	getline(cin, tr.name);
 	cout << "Enter the length of the pipe(in kilometers) : ";
 	proverka_doub(tr.lenght);
@@ -99,6 +100,7 @@ CS enter_CS()
 	CS cs;
 	cout << "Enter the name of the compressor station : ";
 	cin.ignore();
+	cin >> ws;
 	getline(cin, cs.name);
 	cout << "Enter the number of workshops at the station : ";
 	proverka_int(cs.workshops);
