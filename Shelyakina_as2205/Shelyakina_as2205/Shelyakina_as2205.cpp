@@ -19,7 +19,7 @@ struct CompressorStation {
     float efficiency;
 };
 
-void addPipe(vector<Pipe>& pipes) {
+void addPipe(Pipe & pipes) {
     Pipe pipe;
     while (true) {
         string input;
@@ -92,11 +92,11 @@ void addPipe(vector<Pipe>& pipes) {
         }
     }
 
-    pipes.push_back(pipe);
+
     cout << "Pipe added successfully!" << endl;
 }
 
-void addCompressorStation(vector<CompressorStation>& compressorStations) {
+void addCompressorStation(CompressorStation& compressorStations) {
     CompressorStation cs;
     while (true) {
         string input;
@@ -176,40 +176,25 @@ void addCompressorStation(vector<CompressorStation>& compressorStations) {
             }
         }
     }
-    compressorStations.push_back(cs);
+
     cout << "Compressor station added successfully" << endl;
 }
 
-void editPipe(vector<Pipe>& pipes) {
-    string pipeName;
-    cout << "Enter the name of the pipe you want to edit: ";
-    cin >> pipeName;
-    bool pipeFound = false;
-    for (int i = 0; i < pipes.size(); i++) {
-        if (pipes[i].name == pipeName) {
-            pipeFound = true;
-            cout << "Current status of pipe \"" << pipes[i].name << "\": "
-                << (pipes[i].isUnderRepair ? "Under Repair" : "In Operation") << endl;
-            cout << "Change pipe status? (0 - In Operation, 1 - Under Repair): ";
-            int choice;
-            cin >> choice;
-            if (choice == 0) {
-                pipes[i].isUnderRepair = false;
-            }
-            else if (choice == 1) {
-                pipes[i].isUnderRepair = true;
-            }
-            else {
-                cout << "Invalid choice!" << endl;
-                return;
-            }
-            cout << "Pipe status \"" << pipes[i].name << "\" updated successfully!" << endl;
-            break;
-        }
+void editPipe(Pipe& pipes) {
+    cout << "Change pipe status? (0 - In Operation, 1 - Under Repair): ";
+    int choice;
+    cin >> choice;
+    if (choice == 0) {
+        pipes.isUnderRepair = false;
     }
-    if (!pipeFound) {
-        cout << "Pipe with that name not found!" << endl;
+    else if (choice == 1) {
+        pipes.isUnderRepair = true;
     }
+    else {
+        cout << "Invalid choice!" << endl;
+        return;
+    }
+
 }
 
 void editCompressorStation(vector<CompressorStation>& compressorStations) {
@@ -255,7 +240,7 @@ void saveData(vector<Pipe>& pipes, vector<CompressorStation>& compressorStations
     }
 }
 
-void loadData(vector<Pipe>& pipes, vector<CompressorStation>& compressorStations) {
+void loadData(Pipe& pipes, vector<CompressorStation>& compressorStations) {
     ifstream file("data.txt");
     if (file.is_open()) {
         pipes.clear();
