@@ -1,352 +1,318 @@
-﻿#include <iostream>
+﻿#include <iostream> 
 #include <fstream>
-#include <vector>
 #include <string>
-
 using namespace std;
 
-struct Pipe {
-    string name;
-    float length;
-    float diameter;
-    bool isUnderRepair;
+struct Pipe
+{
+	string name = "None";
+	double lenght = 0;
+	int diametr = 0;
+	bool repair = false;
 };
 
-struct CompressorStation {
-    string name;
-    int workshops;
-    int workshopsInOperation;
-    float efficiency;
+struct CS
+{
+	string name = "None";
+	int workshops = 0;
+	int workshops_work = 0;
+	double effect = 0;
 };
 
-void addPipe(Pipe & pipes) {
-    Pipe pipe;
-    while (true) {
-        string input;
-        getline(cin, input);
-        if (input.empty()) {
-            cout << "Enter the name of the pipe: ";
-        }
-        else {
-            pipe.name = input;
-            break;
-        }
-    }
-
-    while (true) {
-        string input;
-        getline(cin, input);
-
-        if (input.empty()) {
-            cout << "Enter the length of the pipe (in kilometers): ";
-        }
-        else {
-            try {
-                pipe.length = stof(input);
-                if (pipe.length <= 0 || pipe.length >= 100000) {
-                    cout << "Invalid input. Please enter a correct value." << endl;
-                }
-                else {
-                    break;
-                }
-            }
-            catch (const std::invalid_argument& e) {
-            }
-        }
-    }
-
-    while (true) {
-        string input;
-        getline(cin, input);
-
-        if (input.empty()) {
-            cout << "Enter the diameter of the pipe (in meters): ";
-        }
-        else {
-            try {
-                pipe.diameter = stof(input);
-                if (pipe.diameter <= 0 || pipe.diameter >= 100000) {
-                    cout << "Invalid input. Please enter a correct value." << endl;
-                }
-                else {
-                    break;
-                }
-            }
-            catch (const std::invalid_argument& e) {
-            }
-        }
-    }
-    while (true) {
-        cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
-        cin >> pipe.isUnderRepair;
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter either 0 or 1." << endl;
-        }
-        else if (pipe.isUnderRepair != 0 && pipe.isUnderRepair != 1) {
-            cout << "Invalid input. Please enter either 0 or 1." << endl;
-        }
-        else {
-            break;
-        }
-    }
-
-
-    cout << "Pipe added successfully!" << endl;
+int Enter_vibor()
+{
+	cout << "\nChoose an action: ";
+	int vibor = -1;
+	cin >> vibor;
+	while (cin.fail() || cin.peek() != '\n')
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Choose an action: ";
+		cin >> vibor;
+	}
+	return vibor;
 }
 
-void addCompressorStation(CompressorStation& compressorStations) {
-    CompressorStation cs;
-    while (true) {
-        string input;
-        getline(cin, input);
-        if (input.empty()) {
-            cout << "Enter the name of the compressor station: ";
-        }
-        else {
-            cs.name = input;
-            break;
-        }
-    }
-    while (true) {
-        string input;
-        getline(cin, input);
-
-        if (input.empty()) {
-            cout << "Enter the number of workshops at the station : ";
-        }
-        else {
-            try {
-                cs.workshops = stof(input);
-                if (cs.workshops <= 0 || cs.workshops >= 200) {
-                    cout << "Invalid input. Please enter a correct value." << endl;
-                }
-                else {
-                    break;
-                }
-            }
-            catch (const std::invalid_argument& e) {
-            }
-        }
-    }
-
-    while (true) {
-        string input;
-        getline(cin, input);
-
-        if (input.empty()) {
-            cout << "Enter the number of workshops in operation: ";
-        }
-        else {
-            try {
-                cs.workshopsInOperation = stof(input);
-                int zapomny;
-                zapomny = cs.workshops + 1;
-                if (cs.workshopsInOperation <= 0 || cs.workshopsInOperation >= zapomny) {
-                    cout << "Invalid input. Please enter a correct value." << endl;
-                }
-                else {
-                    break;
-                }
-            }
-            catch (const std::invalid_argument& e) {
-            }
-        }
-    }
-
-    while (true) {
-        string input;
-        getline(cin, input);
-
-        if (input.empty()) {
-            cout << "Enter the efficiency of the station: ";
-        }
-        else {
-            try {
-                cs.efficiency = stof(input);
-                if (cs.efficiency < 0 || cs.efficiency >= 10000) {
-                    cout << "Invalid input. Please enter a correct value." << endl;
-                }
-                else {
-                    break;
-                }
-            }
-            catch (const std::invalid_argument& e) {
-            }
-        }
-    }
-
-    cout << "Compressor station added successfully" << endl;
+double proverka_doub(double& doub)
+{
+	cin >> doub;
+	while (cin.fail() || cin.peek() != '\n' || doub <= 0)
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Enter double ";
+		cin >> doub;
+	}
+	return doub;
 }
 
-void editPipe(Pipe& pipes) {
-    cout << "Change pipe status? (0 - In Operation, 1 - Under Repair): ";
-    int choice;
-    cin >> choice;
-    if (choice == 0) {
-        pipes.isUnderRepair = false;
-    }
-    else if (choice == 1) {
-        pipes.isUnderRepair = true;
-    }
-    else {
-        cout << "Invalid choice!" << endl;
-        return;
-    }
+int proverka_int(int& inter)
+{
+	cin >> inter;
+	while (cin.fail() || cin.peek() != '\n' || inter <= 0)
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Enter integer ";
+		cin >> inter;
+	}
+	return inter;
+}
+
+bool proverka_bool(bool& bolli)
+{
+	cin >> bolli;
+	while (cin.fail() || cin.peek() != '\n')
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Enter bool ";
+		cin >> bolli;
+	}
+	return bolli;
 
 }
 
-void editCompressorStation(vector<CompressorStation>& compressorStations) {
-    string csName;
-    cout << "Enter the name of the compressor station you want to edit: ";
-    cin >> csName;
-    bool csFound = false;
-    for (int i = 0; i < compressorStations.size(); i++) {
-        if (compressorStations[i].name == csName) {
-            csFound = true;
-            cout << "Current number of workshops in operation at station \"" << compressorStations[i].name << "\": "
-                << compressorStations[i].workshopsInOperation << endl;
-            cout << "Change number of workshops in operation? ";
-            cin >> compressorStations[i].workshopsInOperation;
-            cout << "Number of workshops in operation at station \"" << compressorStations[i].name << "\" updated successfully!" << endl;
-            break;
-        }
-    }
-    if (!csFound) {
-        cout << "Compressor station with that name not found!" << endl;
-    }
+Pipe enter_truba()
+{
+	Pipe tr;
+	cout << "Enter the name of the pipe: ";
+	cin.ignore();
+	getline(cin, tr.name);
+	cout << "Enter the length of the pipe(in kilometers) : ";
+	proverka_doub(tr.lenght);
+	cout << "Enter the diameter of the pipe(in meters) :";
+	proverka_int(tr.diametr);
+	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
+	proverka_bool(tr.repair);
+	return tr;
+
+};
+
+CS enter_CS()
+{
+	CS cs;
+	cout << "Enter the name of the compressor station : ";
+	cin.ignore();
+	getline(cin, cs.name);
+	cout << "Enter the number of workshops at the station : ";
+	proverka_int(cs.workshops);
+	cout << "Enter the number of workshops in operation: ";
+	proverka_int(cs.workshops_work);
+	while (cs.workshops < cs.workshops_work)
+	{
+		cout << "Enter a smaller value" << endl;
+		proverka_int(cs.workshops_work);
+	}
+	cout << "Enter effect:";
+	proverka_doub(cs.effect);
+	return cs;
+};
+
+void Print_truba(const Pipe& tr)
+{
+	if ((tr.name) != "None") {
+		cout << "Pipe:" << endl;
+		cout << "Enter name truba:" << tr.name
+			<< "\nEnter lenght:" << tr.lenght
+			<< "\nEnter diametr:" << tr.diametr
+			<< "\nEnter repair : " << tr.repair << endl;
+	}
+	else
+		cout << "You do not have pipe" << endl;
+};
+
+void Print_CS(const CS& cs)
+{
+	if ((cs.name) != "None") {
+		cout << "Station:" << endl;
+		cout << "Enter name Cs:" << cs.name
+			<< "\nEnter workshops:" << cs.workshops
+			<< "\nEnter workshops in work:" << cs.workshops_work
+			<< "\nEnter effect: " << cs.effect << endl;
+	}
+	else
+		cout << "You do not have compressor station" << endl;
+};
+
+void Writing_to_file(Pipe& pipe, CS& station)
+{
+	ofstream fout("lab_smirnova.txt");
+	if ((pipe.name) != "None") {
+		cout << "Add information about pipe " << endl;
+		fout << "Pipe" << endl;
+		fout << pipe.name << endl;
+		fout << pipe.lenght << endl;
+		fout << pipe.diametr << endl;
+		fout << pipe.repair << endl;
+	}
+	else
+		cout << "No information about pipe " << endl;
+
+	if ((station.name) != "None") {
+		cout << "Add information about station " << endl;
+		fout << "Station" << endl;
+		fout << station.name << endl;
+		fout << station.workshops << endl;
+		fout << station.workshops_work << endl;
+		fout << station.effect << endl;
+	}
+	else
+		cout << "No information about station " << endl;
+	fout.close();
 }
 
-void saveData(vector<Pipe>& pipes, vector<CompressorStation>& compressorStations) {
-    ofstream file("data.txt");
-    if (file.is_open()) {
-        file << "Pipes:" << endl;
-        for (const Pipe& pipe : pipes) {
-            file << "Name: " << pipe.name << ", Length: " << pipe.length << " km, Diameter: "
-                << pipe.diameter << " m, Status: " << (pipe.isUnderRepair ? "Under Repair" : "In Operation") << endl;
-        }
-        file << "Compressor Stations:" << endl;
-        for (const CompressorStation& cs : compressorStations) {
-            file << "Name: " << cs.name << ", Workshops: " << cs.workshops
-                << ", Workshops in Operation: " << cs.workshopsInOperation << ", Efficiency: "
-                << cs.efficiency << endl;
-        }
-        file.close();
-        cout << "Data saved successfully to file data.txt!" << endl;
-    }
-    else {
-        cout << "Unable to open file for saving data!" << endl;
-    }
+void Read_from_file(Pipe& pipe, CS& station)
+{
+	ifstream fin("lab_smirnova.txt");
+	if (fin)
+	{
+		string name_of_cs_or_truba = "no";
+		int p = 0;
+		int s = 0;
+		while (getline(fin, name_of_cs_or_truba))
+		{
+			if (name_of_cs_or_truba == "Pipe")
+			{
+				cout << "Information about pipe:" << endl;
+				cout << "\nPipe" << endl;
+				getline(fin, pipe.name);
+				cout << "Pipe name: " << pipe.name << endl;
+				fin >> pipe.lenght;
+				cout << "Pipe length: " << pipe.lenght << endl;
+				fin >> pipe.diametr;
+				cout << "Pipe diameter: " << pipe.diametr << endl;
+				fin >> pipe.repair;
+				cout << "The pipe attribute: " << pipe.repair << endl;
+				p += 1;
+			}
+			if (name_of_cs_or_truba == "Station")
+			{
+				cout << "Information about Cs:" << endl;
+				cout << "\nCompressor station" << endl;
+				getline(fin, station.name);
+				cout << "Cs name: " << station.name << endl;
+				fin >> station.workshops;
+				cout << "Number of workshops of the Cs: " << station.workshops << endl;
+				fin >> station.workshops_work;
+				cout << "Number of workshops in operation of the Cs: " << station.workshops_work << endl;
+				fin >> station.effect;
+				cout << "CS efficiency: " << station.effect << endl;
+				s += 1;
+			}
+		}
+
+		if (p == 0)
+		{
+			cout << "No information about pipe." << endl;
+		}
+		if (s == 0)
+		{
+			cout << "No information about station." << endl;
+		}
+	}
+	fin.close();
 }
-
-void loadData(Pipe& pipes, vector<CompressorStation>& compressorStations) {
-    ifstream file("data.txt");
-    if (file.is_open()) {
-        pipes.clear();
-        compressorStations.clear();
-
-        string line;
-        string category;
-        while (getline(file, line)) {
-            if (line == "Pipes:") {
-                category = "Pipes";
-            }
-            else if (line == "Compressor Stations:") {
-                category = "Compressor Stations";
-            }
-            else {
-                if (category == "Pipes") {
-                    Pipe pipe;
-                    pipe.name = line.substr(line.find("Name: ") + 6, line.find(", Length:") - line.find("Name: ") - 6);
-                    pipe.length = stof(line.substr(line.find("Length: ") + 8, line.find(" km, Diameter:") - line.find("Length: ") - 8));
-                    pipe.diameter = stof(line.substr(line.find("Diameter: ") + 10, line.find(" m, Status:") - line.find("Diameter: ") - 10));
-                    pipe.isUnderRepair = line.substr(line.find("Status: ") + 8, line.length() - line.find("Status: ") - 8) == "Under Repair";
-                    pipes.push_back(pipe);
-                }
-                else if (category == "Compressor Stations") {
-                    CompressorStation cs;
-                    cs.name = line.substr(line.find("Name: ") + 6, line.find(", Workshops:") - line.find("Name: ") - 6);
-                    cs.workshops = stoi(line.substr(line.find("Workshops: ") + 12, line.find(", Workshops in Operation:") - line.find("Workshops: ") - 12));
-                    cs.workshopsInOperation = stoi(line.substr(line.find("Workshops in Operation: ") + 24, line.find(", Efficiency:") - line.find("Workshops in Operation: ") - 24));
-                    cs.efficiency = stof(line.substr(line.find("Efficiency: ") + 13, line.length() - line.find("Efficiency: ") - 13));
-                    compressorStations.push_back(cs);
-                }
-            }
-        }
-
-        file.close();
-        cout << "Data loaded successfully from file data.txt!" << endl;
-    }
-    else {
-        cout << "Unable to open file for loading data!" << endl;
-    }
+void edit(Pipe& pipe) {
+	pipe.repair = !pipe.repair;
 }
-
-void displayData(const vector<Pipe>& pipes, const vector<CompressorStation>& compressorStations) {
-    cout << "Pipes:" << endl;
-    for (const Pipe& pipe : pipes) {
-        cout << "Name: " << pipe.name << ", Length: " << pipe.length << " km, Diameter: "
-            << pipe.diameter << " m, Status: " << (pipe.isUnderRepair ? "Under Repair" : "In Operation") << endl;
-    }
-    cout << "Compressor Stations:" << endl;
-    for (const CompressorStation& cs : compressorStations) {
-        cout << "Name: " << cs.name << ", Workshops: " << cs.workshops
-            << ", Workshops in Operation: " << cs.workshopsInOperation << ", Efficiency: "
-            << cs.efficiency << endl;
-    }
-}
-
-int main() {
-    vector<Pipe> pipes;
-    vector<CompressorStation> compressorStations;
-
-    int choice;
-    do {
-        cout << "Menu:" << endl;
-        cout << "1. Add Pipe" << endl;
-        cout << "2. Add Compressor Station" << endl;
-        cout << "3. View all objects" << endl;
-        cout << "4. Edit Pipe" << endl;
-        cout << "5. Edit Compressor Station" << endl;
-        cout << "6. Save" << endl;
-        cout << "7. Load" << endl;
-        cout << "0. Exit" << endl;
-        cout << "Choose an action: ";
-        cin >> choice;
-
-        switch (choice) {
-        case 1:
-            addPipe(pipes);
-            break;
-        case 2:
-            addCompressorStation(compressorStations);
-            break;
-        case 3:
-            displayData(pipes, compressorStations);
-            break;
-        case 4:
-            editPipe(pipes);
-            break;
-        case 5:
-            editCompressorStation(compressorStations);
-            break;
-        case 6:
-            saveData(pipes, compressorStations);
-            break;
-        case 7:
-            loadData(pipes, compressorStations);
-            break;
-        case 0:
-            cout << "Goodbye!" << endl;
-            break;
-        default:
-            cout << "Invalid input!" << endl;
-            break;
-        }
-
-        cout << endl;
-    } while (choice != 0);
-
-    return 0;
+int main()
+{
+	Pipe pipe;
+	CS station;
+	while (true)
+	{
+		cout << "Menu:" << endl;
+		cout << "1. Add Pipe" << endl;
+		cout << "2. Add Compressor Station" << endl;
+		cout << "3. View all objects" << endl;
+		cout << "4. Edit Pipe" << endl;
+		cout << "5. Edit Compressor Station" << endl;
+		cout << "6. Save" << endl;
+		cout << "7. Load" << endl;
+		cout << "8. Exit" << endl;
+		switch (Enter_vibor())
+		{
+		case 1:
+		{
+			if ((pipe.name) == "None") {
+				cout << "1. Add pipe" << endl;
+				pipe = enter_truba();
+			}
+			else
+				cout << "You have already entered the pipe" << endl;
+			break;
+		}
+		case 2:
+		{
+			if ((station.name) == "None") {
+				cout << "2. Add Cs" << endl;
+				station = enter_CS();
+			}
+			else
+				cout << "You have already entered the station" << endl;
+			break;
+		}
+		case 3:
+		{
+			cout << "3. View all objects" << endl;
+			Print_truba(pipe);
+			Print_CS(station);
+			break;
+		}
+		case 4:
+		{
+			if ((pipe.name) != "None") {
+				edit(pipe);
+			}
+			else
+				cout << " You do not have a pipe" << endl;
+			break;
+		}
+		case 5:
+		{
+			if ((station.name) != "None") {
+				cout << "5. Edit Cs" << endl;
+				cout << "Entry the number of workshops ";
+				proverka_int(station.workshops_work);
+				while (station.workshops < station.workshops_work)
+				{
+					cout << "Enter a smaller value " << endl;
+					proverka_int(station.workshops_work);
+				}
+			}
+			else
+				cout << " You do not have a compressor station " << endl;
+			break;
+		}
+		case 6:
+		{
+			cout << "6. Save" << endl;
+			Writing_to_file(pipe, station);
+			break;
+		}
+		case 7:
+		{
+			cout << "7. Dowload" << endl;
+			Read_from_file(pipe, station);
+			break;
+		}
+		case 8:
+		{
+			cout << "8. Exit" << endl;
+			return false;
+		}
+		default:
+		{
+			cout << "Entry a number from  1 to 8 " << endl;
+			break;
+		}
+		}
+	}
+	return 0;
 }
