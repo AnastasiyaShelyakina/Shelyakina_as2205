@@ -83,12 +83,7 @@ Pipe enter_truba()
 	Pipe tr;
 	cout << "Enter the name of the pipe: ";
 	cin.ignore();
-	while (getline(cin, tr.name) && tr.name.empty()) {
-		cout << "Invalid input. Try again." << endl;
-		cout << "Enter the name of the pipe: ";
-	}
-	cin >> ws;
-
+	getline(cin, tr.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
 	proverka_doub(tr.lenght);
 
