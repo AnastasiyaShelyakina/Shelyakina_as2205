@@ -83,15 +83,23 @@ Pipe enter_truba()
 	Pipe tr;
 	cout << "Enter the name of the pipe: ";
 	cin.ignore();
+	while (getline(cin, tr.name) && tr.name.empty()) {
+		cout << "Invalid input. Try again." << endl;
+		cout << "Enter the name of the pipe: ";
+	}
 	cin >> ws;
-	getline(cin, tr.name);
-	cout << "Enter the length of the pipe(in kilometers) : ";
+
+	cout << "Enter the length of the pipe (in kilometers): ";
 	proverka_doub(tr.lenght);
-	cout << "Enter the diameter of the pipe(in meters) :";
+
+	cout << "Enter the diameter of the pipe (in meters): ";
 	proverka_int(tr.diametr);
+
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
 	proverka_bool(tr.repair);
+
 	return tr;
+
 
 };
 
@@ -144,7 +152,7 @@ void Print_CS(const CS& cs)
 
 void Writing_to_file(Pipe& pipe, CS& station)
 {
-	ofstream fout("lab_smirnova.txt");
+	ofstream fout("lab1.txt");
 	if ((pipe.name) != "None") {
 		cout << "Add information about pipe " << endl;
 		fout << "Pipe" << endl;
@@ -171,7 +179,7 @@ void Writing_to_file(Pipe& pipe, CS& station)
 
 void Read_from_file(Pipe& pipe, CS& station)
 {
-	ifstream fin("lab_smirnova.txt");
+	ifstream fin("lab1.txt");
 	if (fin)
 	{
 		string name_of_cs_or_truba = "no";
