@@ -7,7 +7,7 @@ struct Pipe
 {
 	string name = "None";
 	double lenght = 0;
-	int diametr = 0;
+	double diametr = 0;
 	bool repair = false;
 };
 
@@ -35,7 +35,7 @@ int Enter_vibor()
 	return vibor;
 }
 
-double proverka_doub(double& doub)
+double vvod_doub(double& doub)
 {
 	cin >> doub;
 	while (cin.fail() || cin.peek() != '\n' || doub <= 0)
@@ -48,8 +48,21 @@ double proverka_doub(double& doub)
 	}
 	return doub;
 }
+double vvod_doubl1(double& doub)
+{
+	cin >> doub;
+	while (cin.fail() || cin.peek() != '\n' || doub <= -1)
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Enter double ";
+		cin >> doub;
+	}
+	return doub;
+}
 
-int proverka_int(int& inter)
+int vvod_int(int& inter)
 {
 	cin >> inter;
 	while (cin.fail() || cin.peek() != '\n' || inter <= 0)
@@ -63,7 +76,22 @@ int proverka_int(int& inter)
 	return inter;
 }
 
-bool proverka_bool(bool& bolli)
+
+int vvod_natural(int& inter)
+{
+	cin >> inter;
+	while (cin.fail() || cin.peek() != '\n' || inter <= -1)
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Try again \n";
+		cout << "Enter integer ";
+		cin >> inter;
+	}
+	return inter;
+}
+
+bool vvod_bool(bool& bolli)
 {
 	cin >> bolli;
 	while (cin.fail() || cin.peek() != '\n')
@@ -81,18 +109,18 @@ bool proverka_bool(bool& bolli)
 Pipe enter_truba()
 {
 	Pipe tr;
-	cout << "Enter the name of the pipee: ";
+	cout << "Enter the name of the pipeee: ";
 	cin.ignore();
 	cin >> ws;
 	getline(cin, tr.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
-	proverka_doub(tr.lenght);
+	vvod_doub(tr.lenght);
 
 	cout << "Enter the diameter of the pipe (in meters): ";
-	proverka_int(tr.diametr);
+	vvod_doub(tr.diametr);
 
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
-	proverka_bool(tr.repair);
+	vvod_bool(tr.repair);
 
 	return tr;
 
@@ -107,48 +135,67 @@ CS enter_CS()
 	cin >> ws;
 	getline(cin, cs.name);
 	cout << "Enter the number of workshops at the station : ";
-	proverka_int(cs.workshops);
+	vvod_int(cs.workshops);
 	cout << "Enter the number of workshops in operation: ";
-	proverka_int(cs.workshops_work);
+	vvod_natural(cs.workshops_work);
 	while (cs.workshops < cs.workshops_work)
 	{
 		cout << "Enter a smaller value" << endl;
-		proverka_int(cs.workshops_work);
+		vvod_int(cs.workshops_work);
 	}
 	cout << "Enter effect:";
-	proverka_doub(cs.effect);
+	vvod_doubl1(cs.effect);
 	return cs;
 };
+//
+//void Print_truba(const Pipe& tr)
+//{
+//	if ((tr.name) != "None") {
+//		cout << "Pipe:" << endl;
+//		cout << "Enter name truba:" << tr.name
+//			<< "\nEnter lenght:" << tr.lenght
+//			<< "\nEnter diametr:" << tr.diametr
+//			<< "\nEnter repair : " << tr.repair << endl;
+//	}
+//	else
+//		cout << "You do not have pipe" << endl;
+//};
+//
+//void Print_CS(const CS& cs)
+//{
+//	if ((cs.name) != "None") {
+//		cout << "Station:" << endl;
+//		cout << "Enter name Cs:" << cs.name
+//			<< "\nEnter workshops:" << cs.workshops
+//			<< "\nEnter workshops in work:" << cs.workshops_work
+//			<< "\nEnter effect: " << cs.effect << endl;
+//	}
+//	else
+//		cout << "You do not have compressor station" << endl;
+//};
+//dorabotki
 
-void Print_truba(const Pipe& tr)
-{
-	if ((tr.name) != "None") {
-		cout << "Pipe:" << endl;
-		cout << "Enter name truba:" << tr.name
-			<< "\nEnter lenght:" << tr.lenght
-			<< "\nEnter diametr:" << tr.diametr
-			<< "\nEnter repair : " << tr.repair << endl;
-	}
-	else
-		cout << "You do not have pipe" << endl;
-};
+void edit(Pipe& pipe) {
+	pipe.repair = !pipe.repair;
+}
 
-void Print_CS(const CS& cs)
+ostream& operator <<(ostream& out, const Pipe& pipe) {
+	out << "Pipe name: " << pipe.name << endl;
+	out << "Length: " << pipe.lenght << " km" << endl;
+	out << "Diameter: " << pipe.diametr << " mm" << endl;
+	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
+	return out;
+}
+ostream& operator <<(ostream& out, const CS& station) {
+	out << "Compressor station vame: " << station.name << endl;
+	out << "Number of workshops:" << station.workshops << endl;
+	out << "Number of workshops in operation:" << station.workshops_work << endl;
+	out << "Effect: " << station.effect << endl;
+	return out;
+}
+void Writing_to_file1(Pipe& pipe)
 {
-	if ((cs.name) != "None") {
-		cout << "Station:" << endl;
-		cout << "Enter name Cs:" << cs.name
-			<< "\nEnter workshops:" << cs.workshops
-			<< "\nEnter workshops in work:" << cs.workshops_work
-			<< "\nEnter effect: " << cs.effect << endl;
-	}
-	else
-		cout << "You do not have compressor station" << endl;
-};
-
-void Writing_to_file(Pipe& pipe, CS& station)
-{
-	ofstream fout("lab1.txt");
+	ofstream fout("lab1.txt",ios::app);
 	if ((pipe.name) != "None") {
 		cout << "Add information about pipe " << endl;
 		fout << "Pipe" << endl;
@@ -160,6 +207,11 @@ void Writing_to_file(Pipe& pipe, CS& station)
 	else
 		cout << "No information about pipe " << endl;
 
+	fout.close();
+}
+void Writing_to_file2(CS& station)
+{
+	ofstream fout("lab1.txt", ios::app);
 	if ((station.name) != "None") {
 		cout << "Add information about station " << endl;
 		fout << "Station" << endl;
@@ -172,15 +224,13 @@ void Writing_to_file(Pipe& pipe, CS& station)
 		cout << "No information about station " << endl;
 	fout.close();
 }
-
-void Read_from_file(Pipe& pipe, CS& station)
+void Read_from_file1(Pipe& pipe)
 {
 	ifstream fin("lab1.txt");
 	if (fin)
 	{
 		string name_of_cs_or_truba = "no";
 		int p = 0;
-		int s = 0;
 		while (getline(fin, name_of_cs_or_truba))
 		{
 			if (name_of_cs_or_truba == "Pipe")
@@ -188,28 +238,10 @@ void Read_from_file(Pipe& pipe, CS& station)
 				cout << "Information about pipe:" << endl;
 				cout << "\nPipe" << endl;
 				getline(fin, pipe.name);
-				cout << "Pipe name: " << pipe.name << endl;
 				fin >> pipe.lenght;
-				cout << "Pipe length: " << pipe.lenght << endl;
 				fin >> pipe.diametr;
-				cout << "Pipe diameter: " << pipe.diametr << endl;
 				fin >> pipe.repair;
-				cout << "Pipe repair: " << pipe.repair << endl;
 				p += 1;
-			}
-			if (name_of_cs_or_truba == "Station")
-			{
-				cout << "Information about Cs:" << endl;
-				cout << "\nCompressor station" << endl;
-				getline(fin, station.name);
-				cout << "Cs name: " << station.name << endl;
-				fin >> station.workshops;
-				cout << "Number of workshops of the Cs: " << station.workshops << endl;
-				fin >> station.workshops_work;
-				cout << "Number of workshops in operation of the Cs: " << station.workshops_work << endl;
-				fin >> station.effect;
-				cout << "CS efficiency: " << station.effect << endl;
-				s += 1;
 			}
 		}
 
@@ -217,32 +249,41 @@ void Read_from_file(Pipe& pipe, CS& station)
 		{
 			cout << "No information about pipe." << endl;
 		}
+		else
+			cout << pipe << endl;
+	}
+	fin.close();
+}
+void Read_from_file2(CS& station)
+{
+	ifstream fin("lab1.txt");
+	if (fin)
+	{
+		string name_of_cs_or_truba = "no";
+		int s = 0;
+		while (getline(fin, name_of_cs_or_truba))
+		{
+			if (name_of_cs_or_truba == "Station")
+			{
+				cout << "Information about Cs:" << endl;
+				cout << "\nCompressor station" << endl;
+				getline(fin, station.name);
+				fin >> station.workshops;
+				fin >> station.workshops_work;
+				fin >> station.effect;
+				s += 1;
+			}
+		}
 		if (s == 0)
 		{
 			cout << "No information about station." << endl;
 		}
+		else
+			cout << station << endl;
 	}
 	fin.close();
 }
-//dorabotki
-void edit(Pipe& pipe) {
-	pipe.repair = !pipe.repair;
-}
 
-ostream& operator <<(ostream& out, const Pipe& pipe) {
-	out << "Pipe name: " << pipe.name << endl;
-	out << "Length: " << pipe.lenght << " km" << endl;
-	out << "Diameter: " << pipe.diametr << " meters" << endl;
-	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
-	return out;
-}
-ostream& operator <<(ostream& out, const CS& station) {
-	out << "Compressor station vame: " << station.name << endl;
-	out << "Number of workshops:" << station.workshops << endl;
-	out << "Number of workshops in operation:" << station.workshops_work << endl;
-	out << "Effect: " << station.effect << endl;
-	return out;
-}
 int main()
 {
 	Pipe pipe;
@@ -309,11 +350,11 @@ int main()
 			if ((station.name) != "None") {
 				cout << "5. Edit Cs" << endl;
 				cout << "Entry the number of workshops ";
-				proverka_int(station.workshops_work);
+				vvod_int(station.workshops_work);
 				while (station.workshops < station.workshops_work)
 				{
 					cout << "Enter a smaller value " << endl;
-					proverka_int(station.workshops_work);
+					vvod_int(station.workshops_work);
 				}
 			}
 			else
@@ -323,13 +364,19 @@ int main()
 		case 6:
 		{
 			cout << "6. Save" << endl;
-			Writing_to_file(pipe, station);
+			if ((pipe.name) != "None") {
+				Writing_to_file1(pipe);
+			}
+			if ((station.name) != "None") {
+				Writing_to_file2(station);
+			}
 			break;
 		}
 		case 7:
 		{
 			cout << "7. Dowload" << endl;
-			Read_from_file(pipe, station);
+			Read_from_file1(pipe);
+			Read_from_file2(station);
 			break;
 		}
 		case 8:
