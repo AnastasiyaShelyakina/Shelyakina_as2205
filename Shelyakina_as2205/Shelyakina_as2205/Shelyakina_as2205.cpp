@@ -81,7 +81,7 @@ bool proverka_bool(bool& bolli)
 Pipe enter_truba()
 {
 	Pipe tr;
-	cout << "Enter the name of the pipe: ";
+	cout << "Enter the name of the pipee: ";
 	cin.ignore();
 	cin >> ws;
 	getline(cin, tr.name);
@@ -194,7 +194,7 @@ void Read_from_file(Pipe& pipe, CS& station)
 				fin >> pipe.diametr;
 				cout << "Pipe diameter: " << pipe.diametr << endl;
 				fin >> pipe.repair;
-				cout << "The pipe attribute: " << pipe.repair << endl;
+				cout << "Pipe repair: " << pipe.repair << endl;
 				p += 1;
 			}
 			if (name_of_cs_or_truba == "Station")
@@ -224,8 +224,24 @@ void Read_from_file(Pipe& pipe, CS& station)
 	}
 	fin.close();
 }
+//dorabotki
 void edit(Pipe& pipe) {
 	pipe.repair = !pipe.repair;
+}
+
+ostream& operator <<(ostream& out, const Pipe& pipe) {
+	out << "Pipe name: " << pipe.name << endl;
+	out << "Length: " << pipe.lenght << " km" << endl;
+	out << "Diameter: " << pipe.diametr << " meters" << endl;
+	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
+	return out;
+}
+ostream& operator <<(ostream& out, const CS& station) {
+	out << "Compressor station vame: " << station.name << endl;
+	out << "Number of workshops:" << station.workshops << endl;
+	out << "Number of workshops in operation:" << station.workshops_work << endl;
+	out << "Effect: " << station.effect << endl;
+	return out;
 }
 int main()
 {
@@ -266,9 +282,17 @@ int main()
 		}
 		case 3:
 		{
-			cout << "3. View all objects" << endl;
-			Print_truba(pipe);
-			Print_CS(station);
+			cout << "3. View all object" << endl;
+			if ((pipe.name) != "None") {
+				cout << pipe << endl;
+			}
+			else
+				cout << "You do not have pipe" << endl;
+			if ((station.name) != "None") {
+				cout << station << endl;
+			}
+			else
+				cout << "You do not have station" << endl;
 			break;
 		}
 		case 4:
