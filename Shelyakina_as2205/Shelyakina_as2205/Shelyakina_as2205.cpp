@@ -195,7 +195,7 @@ ostream& operator <<(ostream& out, const CS& station) {
 }
 void Writing_to_file1(Pipe& pipe)
 {
-	ofstream fout("lab1.txt",ios::app);
+	ofstream fout("lab1.txt");
 	if ((pipe.name) != "None") {
 		cout << "Add information about pipe " << endl;
 		fout << "Pipe" << endl;
@@ -211,18 +211,68 @@ void Writing_to_file1(Pipe& pipe)
 }
 void Writing_to_file2(CS& station)
 {
-	ofstream fout("lab1.txt", ios::app);
-	if ((station.name) != "None") {
-		cout << "Add information about station " << endl;
-		fout << "Station" << endl;
-		fout << station.name << endl;
-		fout << station.workshops << endl;
-		fout << station.workshops_work << endl;
-		fout << station.effect << endl;
+	ifstream fin("lab1.txt");
+	string line;
+	int flag = 0;
+	while (std::getline(fin, line)) {
+		if (line.find("Station") != std::string::npos) {
+			std::cout << "error element est" << std::endl;
+			flag = 1;
+			break;
+		}
+
 	}
-	else
-		cout << "No information about station " << endl;
-	fout.close();
+	if (flag == 0){
+		ofstream fout("lab1.txt", ios::app);
+		if ((station.name) != "None") {
+			cout << "Add information about station " << endl;
+			fout << "Station" << endl;
+			fout << station.name << endl;
+			fout << station.workshops << endl;
+			fout << station.workshops_work << endl;
+			fout << station.effect << endl;
+		}
+		else
+			cout << "No information about station " << endl;
+		fout.close();
+
+	}
+
+	fin.close();
+
+
+	
+}
+
+ofstream& operator << (ofstream& file, const Pipe& pipe) {
+	file << "Pipe" << endl;
+	file << pipe.name << endl;
+	file << pipe.lenght << endl;
+	file << pipe.diametr << endl;
+	file << pipe.repair << endl;
+	return file;
+}
+
+ofstream& operator << (ofstream& file, const CS& station) {
+	file << "Station" << endl;
+	file << station.name << endl;
+	file << station.workshops << endl;
+	file << station.workshops_work << endl;
+	file << station.effect << endl;
+	return file;
+}
+
+void Writing_to_file3(Pipe& pipe, CS& station) {
+	ofstream file;
+	file.open("lab1.txt");
+	if (!file)
+		cout << "file is not found" << endl;
+	else {
+		file << pipe << endl;
+		file << station << endl;
+	}
+
+	file.close();
 }
 void Read_from_file1(Pipe& pipe)
 {
@@ -364,12 +414,7 @@ int main()
 		case 6:
 		{
 			cout << "6. Save" << endl;
-			if ((pipe.name) != "None") {
-				Writing_to_file1(pipe);
-			}
-			if ((station.name) != "None") {
-				Writing_to_file2(station);
-			}
+			Writing_to_file3(pipe, station);
 			break;
 		}
 		case 7:
