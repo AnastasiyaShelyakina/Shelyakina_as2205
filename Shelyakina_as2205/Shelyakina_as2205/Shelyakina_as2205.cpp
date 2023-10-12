@@ -193,56 +193,56 @@ ostream& operator <<(ostream& out, const CS& station) {
 	out << "Effect: " << station.effect << endl;
 	return out;
 }
-void Writing_to_file1(Pipe& pipe)
-{
-	ofstream fout("lab1.txt");
-	if ((pipe.name) != "None") {
-		cout << "Add information about pipe " << endl;
-		fout << "Pipe" << endl;
-		fout << pipe.name << endl;
-		fout << pipe.lenght << endl;
-		fout << pipe.diametr << endl;
-		fout << pipe.repair << endl;
-	}
-	else
-		cout << "No information about pipe " << endl;
-
-	fout.close();
-}
-void Writing_to_file2(CS& station)
-{
-	ifstream fin("lab1.txt");
-	string line;
-	int flag = 0;
-	while (std::getline(fin, line)) {
-		if (line.find("Station") != std::string::npos) {
-			std::cout << "error element est" << std::endl;
-			flag = 1;
-			break;
-		}
-
-	}
-	if (flag == 0){
-		ofstream fout("lab1.txt", ios::app);
-		if ((station.name) != "None") {
-			cout << "Add information about station " << endl;
-			fout << "Station" << endl;
-			fout << station.name << endl;
-			fout << station.workshops << endl;
-			fout << station.workshops_work << endl;
-			fout << station.effect << endl;
-		}
-		else
-			cout << "No information about station " << endl;
-		fout.close();
-
-	}
-
-	fin.close();
-
-
-	
-}
+//void Writing_to_file1(Pipe& pipe)
+//{
+//	ofstream fout("lab1.txt");
+//	if ((pipe.name) != "None") {
+//		cout << "Add information about pipe " << endl;
+//		fout << "Pipe" << endl;
+//		fout << pipe.name << endl;
+//		fout << pipe.lenght << endl;
+//		fout << pipe.diametr << endl;
+//		fout << pipe.repair << endl;
+//	}
+//	else
+//		cout << "No information about pipe " << endl;
+//
+//	fout.close();
+//}
+//void Writing_to_file2(CS& station)
+//{
+//	ifstream fin("lab1.txt");
+//	string line;
+//	int flag = 0;
+//	while (std::getline(fin, line)) {
+//		if (line.find("Station") != std::string::npos) {
+//			std::cout << "error element est" << std::endl;
+//			flag = 1;
+//			break;
+//		}
+//
+//	}
+//	if (flag == 0){
+//		ofstream fout("lab1.txt", ios::app);
+//		if ((station.name) != "None") {
+//			cout << "Add information about station " << endl;
+//			fout << "Station" << endl;
+//			fout << station.name << endl;
+//			fout << station.workshops << endl;
+//			fout << station.workshops_work << endl;
+//			fout << station.effect << endl;
+//		}
+//		else
+//			cout << "No information about station " << endl;
+//		fout.close();
+//
+//	}
+//
+//	fin.close();
+//
+//
+//	
+//}
 
 ofstream& operator << (ofstream& file, const Pipe& pipe) {
 	file << "Pipe" << endl;
@@ -262,82 +262,58 @@ ofstream& operator << (ofstream& file, const CS& station) {
 	return file;
 }
 
-void Writing_to_file3(Pipe& pipe, CS& station) {
+ifstream& operator >> (ifstream& file, Pipe& pipe) {
+	getline(file, pipe.name);
+	file >> pipe.lenght;
+	file >> pipe.diametr;
+	file >> pipe.repair;
+	return file;
+}
+
+ifstream& operator >> (ifstream& fin, CS& station) {
+	getline(fin, station.name);
+	fin >> station.workshops;
+	fin >> station.workshops_work;
+	fin >> station.effect;
+	return fin;
+}
+
+void Writing_to_file(Pipe& pipe, CS& station) {
 	ofstream file;
 	file.open("lab1.txt");
 	if (!file)
 		cout << "file is not found" << endl;
 	else {
-		file << pipe << endl;
-		file << station << endl;
+		if (pipe.lenght>0)
+			file << pipe << endl;
+		if (station.workshops>0)
+			file << station << endl;
 	}
 
 	file.close();
 }
-void Read_from_file1(Pipe& pipe)
+void Read_from_file(Pipe& pipe, CS& st)
 {
 	ifstream fin("lab1.txt");
 	if (fin)
 	{
-		string name_of_cs_or_truba = "no";
-		int p = 0;
+		string name_of_cs_or_truba="";
 		while (getline(fin, name_of_cs_or_truba))
 		{
 			if (name_of_cs_or_truba == "Pipe")
-			{
-				cout << "Information about pipe:" << endl;
-				cout << "\nPipe" << endl;
-				getline(fin, pipe.name);
-				fin >> pipe.lenght;
-				fin >> pipe.diametr;
-				fin >> pipe.repair;
-				p += 1;
-			}
+				fin >> pipe;
+			else  if (name_of_cs_or_truba == "Station")
+				fin >> st;
 		}
 
-		if (p == 0)
-		{
-			cout << "No information about pipe." << endl;
-		}
-		else
-			cout << pipe << endl;
+		fin.close();
 	}
-	fin.close();
-}
-void Read_from_file2(CS& station)
-{
-	ifstream fin("lab1.txt");
-	if (fin)
-	{
-		string name_of_cs_or_truba = "no";
-		int s = 0;
-		while (getline(fin, name_of_cs_or_truba))
-		{
-			if (name_of_cs_or_truba == "Station")
-			{
-				cout << "Information about Cs:" << endl;
-				cout << "\nCompressor station" << endl;
-				getline(fin, station.name);
-				fin >> station.workshops;
-				fin >> station.workshops_work;
-				fin >> station.effect;
-				s += 1;
-			}
-		}
-		if (s == 0)
-		{
-			cout << "No information about station." << endl;
-		}
-		else
-			cout << station << endl;
-	}
-	fin.close();
 }
 
 int main()
 {
-	Pipe pipe;
-	CS station;
+	Pipe pipe = {};
+	CS station = {};
 	while (true)
 	{
 		cout << "Menu:" << endl;
@@ -414,14 +390,13 @@ int main()
 		case 6:
 		{
 			cout << "6. Save" << endl;
-			Writing_to_file3(pipe, station);
+			Writing_to_file(pipe, station);
 			break;
 		}
 		case 7:
 		{
 			cout << "7. Dowload" << endl;
-			Read_from_file1(pipe);
-			Read_from_file2(station);
+			Read_from_file(pipe, station);
 			break;
 		}
 		case 8:
