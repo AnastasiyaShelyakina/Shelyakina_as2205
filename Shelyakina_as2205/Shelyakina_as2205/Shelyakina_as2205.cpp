@@ -1,15 +1,23 @@
 ﻿#include <iostream> 
 #include <fstream>
 #include <string>
-using namespace std;
+#include "Pipe.h"
+#include "Header.h"
+#include <unordered_map>
+#include <unordered_set>
 
-struct Pipe
-{
-	string name = "None";
-	double lenght = 0;
-	double diametr = 0;
-	bool repair = false;
-};
+using namespace std;
+unordered_map<int, Pipe> pipe_group;
+
+
+
+//struct Pipe
+//{
+//	string name = "None";
+//	double lenght = 0;
+//	double diametr = 0;
+//	bool repair = false;
+//};
 
 struct CS
 {
@@ -109,8 +117,10 @@ bool vvod_bool(bool& bolli)
 Pipe enter_truba()
 {
 	Pipe tr;
-	cout << "Enter the name of the pipeee: ";
-	cin.ignore();
+	cin >> tr;
+	pipe_group.insert({ tr.get_id(),tr });
+	/*cout << "Index of pipe" << tr.id;
+	cout << "Enter the name of the pipeee: ";  
 	cin >> ws;
 	getline(cin, tr.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
@@ -121,7 +131,7 @@ Pipe enter_truba()
 
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
 	vvod_bool(tr.repair);
-
+	*/
 	return tr;
 
 
@@ -131,9 +141,7 @@ CS enter_CS()
 {
 	CS cs;
 	cout << "Enter the name of the compressor station : ";
-	cin.ignore();
-	cin >> ws;
-	getline(cin, cs.name);
+	getline(cin>>ws, cs.name);
 	cout << "Enter the number of workshops at the station : ";
 	vvod_int(cs.workshops);
 	cout << "Enter the number of workshops in operation: ";
@@ -175,17 +183,17 @@ CS enter_CS()
 //};
 //dorabotki
 
-void edit(Pipe& pipe) {
-	pipe.repair = !pipe.repair;
-}
+//void edit(unordered_map<int, Pipe>& pipe_group) {
+//	pipe.repair = !pipe.repair;
+//}
 
-ostream& operator <<(ostream& out, const Pipe& pipe) {
-	out << "Pipe name: " << pipe.name << endl;
-	out << "Length: " << pipe.lenght << " km" << endl;
-	out << "Diameter: " << pipe.diametr << " mm" << endl;
-	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
-	return out;
-}
+//ostream& operator <<(ostream& out, const Pipe& pipe) {
+//	out << "Pipe name: " << pipe.name << endl;
+//	out << "Length: " << pipe.lenght << " km" << endl;
+//	out << "Diameter: " << pipe.diametr << " mm" << endl;
+//	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
+//	return out;
+//}
 ostream& operator <<(ostream& out, const CS& station) {
 	out << "Compressor station vame: " << station.name << endl;
 	out << "Number of workshops:" << station.workshops << endl;
@@ -244,14 +252,14 @@ ostream& operator <<(ostream& out, const CS& station) {
 //	
 //}
 
-ofstream& operator << (ofstream& file, const Pipe& pipe) {
-	file << "Pipe" << endl;
-	file << pipe.name << endl;
-	file << pipe.lenght << endl;
-	file << pipe.diametr << endl;
-	file << pipe.repair << endl;
-	return file;
-}
+//ofstream& operator << (ofstream& file, const Pipe& pipe) {
+//	file << "Pipe" << endl;
+//	file << pipe.name << endl;
+//	file << pipe.lenght << endl;
+//	file << pipe.diametr << endl;
+//	file << pipe.repair << endl;
+//	return file;
+//}
 
 ofstream& operator << (ofstream& file, const CS& station) {
 	file << "Station" << endl;
@@ -262,13 +270,13 @@ ofstream& operator << (ofstream& file, const CS& station) {
 	return file;
 }
 
-ifstream& operator >> (ifstream& file, Pipe& pipe) {
-	getline(file, pipe.name);
-	file >> pipe.lenght;
-	file >> pipe.diametr;
-	file >> pipe.repair;
-	return file;
-}
+//ifstream& operator >> (ifstream& file, Pipe& pipe) {
+//	getline(file, pipe.name);
+//	file >> pipe.lenght;
+//	file >> pipe.diametr;
+//	file >> pipe.repair;
+//	return file;
+//}
 
 ifstream& operator >> (ifstream& fin, CS& station) {
 	getline(fin, station.name);
@@ -278,15 +286,15 @@ ifstream& operator >> (ifstream& fin, CS& station) {
 	return fin;
 }
 
-void Writing_to_file(Pipe& pipe, CS& station) {
+void Writing_to_file(Pipe& pipe_group, CS& station) {
 	ofstream file;
 	file.open("lab1.txt");
 	if (!file)
 		cout << "file is not found" << endl;
 	else {
-		if (pipe.lenght>0)
-			file << pipe << endl;
-		if (station.workshops>0)
+		//if (pipe.lenght>0)
+			file << pipe_group << endl;
+		//if (station.workshops>0)
 			file << station << endl;
 	}
 
