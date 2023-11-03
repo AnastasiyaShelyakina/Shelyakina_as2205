@@ -7,17 +7,15 @@ int Pipe::NextId=1
 
 
 istream& operator >>(istream& in, const Pipe& pipe) {
-	cout << "Index of pipe" << pipe.id<<endl;
-
 	cout << "Enter the name of the pipeee: ";
-	cin.clear();
-	cin.ignore(INT_MAX, '\n');
+	//cin.clear();
+	//cin.ignore(INT_MAX, '\n');
 	getline(cin, pipe.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
-	tr.lenght= getcorrectnumber(0.0, DBL_MAX);
+	tr.lenght= getcorrectnumber(0.0, 500.0);
 
 	cout << "Enter the diameter of the pipe (in meters): ";
-	pipe.diametr= getcorrectnumber(0.0, DBL_MAX);
+	pipe.diametr= getcorrectnumber(0.0, 1400.0);
 
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
 	pipe.repair= getcorrectnumber(0, 1);

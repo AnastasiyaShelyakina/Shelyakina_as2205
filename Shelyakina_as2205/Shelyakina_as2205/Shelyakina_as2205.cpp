@@ -114,7 +114,7 @@ bool vvod_bool(bool& bolli)
 
 }
 
-Pipe enter_truba()
+void enter_truba()
 {
 	Pipe tr;
 	cin >> tr;
@@ -132,7 +132,6 @@ Pipe enter_truba()
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
 	vvod_bool(tr.repair);
 	*/
-	return tr;
 
 
 };
@@ -183,9 +182,10 @@ CS enter_CS()
 //};
 //dorabotki
 
-//void edit(unordered_map<int, Pipe>& pipe_group) {
-//	pipe.repair = !pipe.repair;
-//}
+void edit(unordered_map<int, Pipe>& pipe_group) {
+	int id = getcorrectnumber(0, INT_MAX);
+	pipe_group[id].edit_Pipe();
+}
 
 //ostream& operator <<(ostream& out, const Pipe& pipe) {
 //	out << "Pipe name: " << pipe.name << endl;
@@ -286,7 +286,7 @@ ifstream& operator >> (ifstream& fin, CS& station) {
 	return fin;
 }
 
-void Writing_to_file(Pipe& pipe_group, CS& station) {
+void Writing_to_file(unordered_map<int, Pipe>& pipe_group, CS& station) {
 	ofstream file;
 	file.open("lab1.txt");
 	if (!file)
@@ -300,7 +300,7 @@ void Writing_to_file(Pipe& pipe_group, CS& station) {
 
 	file.close();
 }
-void Read_from_file(Pipe& pipe, CS& st)
+void Read_from_file(unordered_map<int, Pipe>& pipe_group, CS& st)
 {
 	ifstream fin("lab1.txt");
 	if (fin)
@@ -309,7 +309,7 @@ void Read_from_file(Pipe& pipe, CS& st)
 		while (getline(fin, name_of_cs_or_truba))
 		{
 			if (name_of_cs_or_truba == "Pipe")
-				fin >> pipe;
+				fin >> pipe_group;
 			else  if (name_of_cs_or_truba == "Station")
 				fin >> st;
 		}
@@ -320,7 +320,7 @@ void Read_from_file(Pipe& pipe, CS& st)
 
 int main()
 {
-	Pipe pipe = {};
+	//Pipe pipe = {};
 	CS station = {};
 	while (true)
 	{
@@ -337,12 +337,13 @@ int main()
 		{
 		case 1:
 		{
-			if ((pipe.name) == "None") {
-				cout << "1. Add pipe" << endl;
-				pipe = enter_truba();
-			}
-			else
-				cout << "You have already entered the pipe" << endl;
+			//if ((pipe.name) == "None") {
+				//cout << "1. Add pipe" << endl;
+				//pipe =//
+				enter_truba();
+			//}
+			//else
+				//cout << "You have already entered the pipe" << endl;
 			break;
 		}
 		case 2:
@@ -358,11 +359,11 @@ int main()
 		case 3:
 		{
 			cout << "3. View all object" << endl;
-			if ((pipe.name) != "None") {
-				cout << pipe << endl;
-			}
-			else
-				cout << "You do not have pipe" << endl;
+			//if ((pipe.name) != "None") {
+				cout << pipe_group << endl;
+			//}
+			//else
+				//cout << "You do not have pipe" << endl;
 			if ((station.name) != "None") {
 				cout << station << endl;
 			}
@@ -372,11 +373,11 @@ int main()
 		}
 		case 4:
 		{
-			if ((pipe.name) != "None") {
-				edit(pipe);
-			}
-			else
-				cout << " You do not have a pipe" << endl;
+			//if ((pipe.name) != "None") {
+				edit(pipe_group);
+			//}
+			//else
+				//cout << " You do not have a pipe" << endl;
 			break;
 		}
 		case 5:
@@ -398,13 +399,13 @@ int main()
 		case 6:
 		{
 			cout << "6. Save" << endl;
-			Writing_to_file(pipe, station);
+			Writing_to_file(pipe_group, station);
 			break;
 		}
 		case 7:
 		{
 			cout << "7. Dowload" << endl;
-			Read_from_file(pipe, station);
+			Read_from_file(pipe_group, station);
 			break;
 		}
 		case 8:
