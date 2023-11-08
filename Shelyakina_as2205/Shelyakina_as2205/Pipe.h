@@ -4,29 +4,29 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include "Header.h"
 
-using namespace std;
 
 class Pipe
 {
 public:
 	static int NextId;
-	string name = "None";
+	std::string name = "None";
 	bool repair = false;
-	Pipe() {
-		id = NextId++;
-	}
-	friend istream& operator>> (istream& in, Pipe& p);
-	friend ostream& operator<< (ostream& out, Pipe& p);
-	friend ifstream& operator >> (ifstream& fin, Pipe& p);
-	friend ofstream& operator << (ofstream& fout, Pipe& p);
+	Pipe();
+
+	friend std::istream& operator >> (std::istream& in, Pipe& p);
+	//friend std::ostream& operator << (std::ostream& out, Pipe& p);
 	void edit_Pipe();
-	void save_pipe(ofstream& file);
-	void load_pipe(ifstream& file);
+	void save_pipe(std::ofstream& file);
+	void load_pipe(std::ifstream& file);
+	void ShowInfo();
 	int get_id() { return id; };
+
+
 private:
-	double lenght = 0;
-	double diametr = 0;
+	double lenght = 0.0;
+	double diametr = 0.0;
 	int id = 0;
 
 };

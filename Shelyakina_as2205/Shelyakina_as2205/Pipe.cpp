@@ -1,46 +1,67 @@
 #include "Pipe.h"
-#include <iostream>
-#include "Header.h"
+
+//#include <iostream>
+
+
 using namespace std;
 
-int Pipe::NextId=1
+int Pipe::NextId = 1;
+
+Pipe::Pipe()
+{
+	id = NextId++;
+}
 
 
-istream& operator >>(istream& in, const Pipe& pipe) {
+istream& operator>>(istream& in, Pipe& p)
+{
+	cout << "index:" << p.id;
 	cout << "Enter the name of the pipeee: ";
 	//cin.clear();
 	//cin.ignore(INT_MAX, '\n');
-	getline(cin, pipe.name);
+	getline(cin, p.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
-	tr.lenght= getcorrectnumber(0.0, 500.0);
+	p.lenght = getcorrectnumber(0.0, 500.0);
 
 	cout << "Enter the diameter of the pipe (in meters): ";
-	pipe.diametr= getcorrectnumber(0.0, 1400.0);
+	p.diametr = getcorrectnumber(0.0, 1400.0);
 
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
-	pipe.repair= getcorrectnumber(0, 1);
-
-
-	
+	p.repair = getcorrectnumber(0, 1);
 	return in;
 }
-ostream& operator <<(ostream& out, const Pipe& pipe) {
+/*
+ostream& operator << (ostream& out, const Pipe& pipe) {
+	out << "index:" << pipe.id << endl;
 	out << "Pipe name: " << pipe.name << endl;
 	out << "Length: " << pipe.lenght << " km" << endl;
 	out << "Diameter: " << pipe.diametr << " mm" << endl;
 	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
 	return out;
 }
-ofstream& operator << (ofstream& file, const Pipe& pipe) {
+*/
+
+void Pipe::ShowInfo()
+{
+	cout << "index:" << pipe.id << endl;
+	cout << "Pipe name: " << pipe.name << endl;
+	cout << "Length: " << pipe.lenght << " km" << endl;
+	cout << "Diameter: " << pipe.diametr << " mm" << endl;
+	cout << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
+}
+
+
+void Pipe::save_pipe (ofstream& file) {
 	file << "Pipe" << endl;
+	file << id << endl;
 	file << pipe.name << endl;
 	file << pipe.lenght << endl;
 	file << pipe.diametr << endl;
 	file << pipe.repair << endl;
-	return file;
 }
-ifstream& operator >> (ifstream& file, Pipe& pipe) {
+void Pipe::load_pipe(ifstream& file) {
 	getline(file, pipe.name);
+	file >> id;
 	file >> pipe.lenght;
 	file >> pipe.diametr;
 	file >> pipe.repair;

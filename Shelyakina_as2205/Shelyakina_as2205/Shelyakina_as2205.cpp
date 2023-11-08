@@ -1,10 +1,5 @@
-﻿#include <iostream> 
-#include <fstream>
-#include <string>
+﻿#include "Header.h"
 #include "Pipe.h"
-#include "Header.h"
-#include <unordered_map>
-#include <unordered_set>
 
 using namespace std;
 unordered_map<int, Pipe> pipe_group;
@@ -114,27 +109,17 @@ bool vvod_bool(bool& bolli)
 
 }
 
-void enter_truba()
+/*
+inline void enter_pipe()
 {
-	Pipe tr;
-	cin >> tr;
-	pipe_group.insert({ tr.get_id(),tr });
-	/*cout << "Index of pipe" << tr.id;
-	cout << "Enter the name of the pipeee: ";  
-	cin >> ws;
-	getline(cin, tr.name);
-	cout << "Enter the length of the pipe (in kilometers): ";
-	vvod_doub(tr.lenght);
-
-	cout << "Enter the diameter of the pipe (in meters): ";
-	vvod_doub(tr.diametr);
-
-	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
-	vvod_bool(tr.repair);
-	*/
+	Pipe pipe;
+	cin >> pipe;
+	pipe_group.insert({ pipe.get_id(),pipe });
 
 
-};
+}
+*/
+
 
 CS enter_CS()
 {
@@ -154,46 +139,22 @@ CS enter_CS()
 	vvod_doubl1(cs.effect);
 	return cs;
 };
-//
-//void Print_truba(const Pipe& tr)
-//{
-//	if ((tr.name) != "None") {
-//		cout << "Pipe:" << endl;
-//		cout << "Enter name truba:" << tr.name
-//			<< "\nEnter lenght:" << tr.lenght
-//			<< "\nEnter diametr:" << tr.diametr
-//			<< "\nEnter repair : " << tr.repair << endl;
-//	}
-//	else
-//		cout << "You do not have pipe" << endl;
-//};
-//
-//void Print_CS(const CS& cs)
-//{
-//	if ((cs.name) != "None") {
-//		cout << "Station:" << endl;
-//		cout << "Enter name Cs:" << cs.name
-//			<< "\nEnter workshops:" << cs.workshops
-//			<< "\nEnter workshops in work:" << cs.workshops_work
-//			<< "\nEnter effect: " << cs.effect << endl;
-//	}
-//	else
-//		cout << "You do not have compressor station" << endl;
-//};
-//dorabotki
 
-void edit(unordered_map<int, Pipe>& pipe_group) {
-	int id = getcorrectnumber(0, INT_MAX);
-	pipe_group[id].edit_Pipe();
+
+void View(unordered_map<int, Pipe>& pipe_group) {
+	for (auto& pipe: pipe_group) {
+		pipe.second.ShowInfo();
+	}
 }
 
-//ostream& operator <<(ostream& out, const Pipe& pipe) {
-//	out << "Pipe name: " << pipe.name << endl;
-//	out << "Length: " << pipe.lenght << " km" << endl;
-//	out << "Diameter: " << pipe.diametr << " mm" << endl;
-//	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
-//	return out;
-//}
+/*
+inline void edit(unordered_map<int, Pipe>& pipe_group) {
+	int id = getcorrectnumber(0, 10000);
+	pipe_group[id].edit_Pipe();
+}
+*/
+
+/*
 ostream& operator <<(ostream& out, const CS& station) {
 	out << "Compressor station vame: " << station.name << endl;
 	out << "Number of workshops:" << station.workshops << endl;
@@ -201,6 +162,8 @@ ostream& operator <<(ostream& out, const CS& station) {
 	out << "Effect: " << station.effect << endl;
 	return out;
 }
+*/
+
 //void Writing_to_file1(Pipe& pipe)
 //{
 //	ofstream fout("lab1.txt");
@@ -252,15 +215,8 @@ ostream& operator <<(ostream& out, const CS& station) {
 //	
 //}
 
-//ofstream& operator << (ofstream& file, const Pipe& pipe) {
-//	file << "Pipe" << endl;
-//	file << pipe.name << endl;
-//	file << pipe.lenght << endl;
-//	file << pipe.diametr << endl;
-//	file << pipe.repair << endl;
-//	return file;
-//}
 
+/*
 ofstream& operator << (ofstream& file, const CS& station) {
 	file << "Station" << endl;
 	file << station.name << endl;
@@ -270,13 +226,7 @@ ofstream& operator << (ofstream& file, const CS& station) {
 	return file;
 }
 
-//ifstream& operator >> (ifstream& file, Pipe& pipe) {
-//	getline(file, pipe.name);
-//	file >> pipe.lenght;
-//	file >> pipe.diametr;
-//	file >> pipe.repair;
-//	return file;
-//}
+
 
 ifstream& operator >> (ifstream& fin, CS& station) {
 	getline(fin, station.name);
@@ -285,7 +235,10 @@ ifstream& operator >> (ifstream& fin, CS& station) {
 	fin >> station.effect;
 	return fin;
 }
+*/
 
+
+/* Временно
 void Writing_to_file(unordered_map<int, Pipe>& pipe_group, CS& station) {
 	ofstream file;
 	file.open("lab1.txt");
@@ -317,7 +270,7 @@ void Read_from_file(unordered_map<int, Pipe>& pipe_group, CS& st)
 		fin.close();
 	}
 }
-
+*/
 int main()
 {
 	//Pipe pipe = {};
@@ -337,13 +290,7 @@ int main()
 		{
 		case 1:
 		{
-			//if ((pipe.name) == "None") {
-				//cout << "1. Add pipe" << endl;
-				//pipe =//
-				enter_truba();
-			//}
-			//else
-				//cout << "You have already entered the pipe" << endl;
+			//enter_pipe();
 			break;
 		}
 		case 2:
@@ -359,25 +306,20 @@ int main()
 		case 3:
 		{
 			cout << "3. View all object" << endl;
-			//if ((pipe.name) != "None") {
-				cout << pipe_group << endl;
-			//}
-			//else
-				//cout << "You do not have pipe" << endl;
+			View(pipe_group);
+			/*
 			if ((station.name) != "None") {
 				cout << station << endl;
 			}
 			else
 				cout << "You do not have station" << endl;
+				*/
 			break;
 		}
 		case 4:
 		{
-			//if ((pipe.name) != "None") {
-				edit(pipe_group);
-			//}
-			//else
-				//cout << " You do not have a pipe" << endl;
+			//edit(pipe_group);
+
 			break;
 		}
 		case 5:
@@ -396,6 +338,7 @@ int main()
 				cout << " You do not have a compressor station " << endl;
 			break;
 		}
+		/* Коменчу на время
 		case 6:
 		{
 			cout << "6. Save" << endl;
@@ -408,6 +351,7 @@ int main()
 			Read_from_file(pipe_group, station);
 			break;
 		}
+		*/
 		case 8:
 		{
 			cout << "8. Exit" << endl;
