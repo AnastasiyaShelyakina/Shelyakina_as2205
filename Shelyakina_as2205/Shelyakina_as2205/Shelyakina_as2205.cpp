@@ -8,83 +8,6 @@
 
 using namespace std;
 
-
-
-
-void edit(Pipe& pipe) {
-	pipe.repair = !pipe.repair;
-}
-
-
-/*
-
-ofstream& operator << (ofstream& file, const Pipe& pipe) {
-	file << "Pipe" << endl;
-	file << pipe.name << endl;
-	file << pipe.lenght << endl;
-	file << pipe.diametr << endl;
-	file << pipe.repair << endl;
-	return file;
-}
-
-ofstream& operator << (ofstream& file, const Cs& station) {
-	file << "Station" << endl;
-	file << station.name << endl;
-	file << station.workshops << endl;
-	file << station.workshops_work << endl;
-	file << station.effect << endl;
-	return file;
-}
-
-ifstream& operator >> (ifstream& file, Pipe& pipe) {
-	getline(file, pipe.name);
-	file >> pipe.lenght;
-	file >> pipe.diametr;
-	file >> pipe.repair;
-	return file;
-}
-
-ifstream& operator >> (ifstream& fin, Cs& station) {
-	getline(fin, station.name);
-	fin >> station.workshops;
-	fin >> station.workshops_work;
-	fin >> station.effect;
-	return fin;
-}
-*/
-/*
-void Writing_to_file(Pipe& pipe, Cs& station) {
-	ofstream file;
-	file.open("lab1.txt");
-	if (!file)
-		cout << "file is not found" << endl;
-	else {
-		if (pipe.lenght > 0)
-			file << pipe << endl;
-		if (station.workshops > 0)
-			file << station << endl;
-	}
-
-	file.close();
-}
-void Read_from_file(Pipe& pipe, Cs& st)
-{
-	ifstream fin("lab1.txt");
-	if (fin)
-	{
-		string name_of_cs_or_truba = "";
-		while (getline(fin, name_of_cs_or_truba))
-		{
-			if (name_of_cs_or_truba == "Pipe")
-				fin >> pipe;
-			else  if (name_of_cs_or_truba == "Station")
-				fin >> st;
-		}
-
-		fin.close();
-	}
-}
-*/
 int main()
 {
 	Pipe pipe = {};
@@ -140,7 +63,7 @@ int main()
 		case 4:
 		{
 			if ((pipe.name) != "None") {
-				edit(pipe);
+				pipe.edit(pipe);
 			}
 			else
 				cout << " You do not have a pipe" << endl;
@@ -157,20 +80,23 @@ int main()
 				cout << " You do not have a compressor station " << endl;
 			break;
 		}
-		/*
+	
 		case 6:
 		{
 			cout << "6. Save" << endl;
-			Writing_to_file(pipe, station);
+			pipe.Writing_to_file(pipe);
+			station.Writing_to_file(station);
 			break;
 		}
 		case 7:
 		{
 			cout << "7. Dowload" << endl;
-			Read_from_file(pipe, station);
+			pipe.Read_from_file(pipe);
+			station.Read_from_file(station);
+
 			break;
 		}
-		*/
+		
 		case 8:
 		{
 			cout << "8. Exit" << endl;
