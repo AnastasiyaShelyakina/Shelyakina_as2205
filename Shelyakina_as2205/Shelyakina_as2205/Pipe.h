@@ -6,20 +6,21 @@
 class Pipe
 {
 private:
+	std::string name = "None";
 	double lenght = 0;
 	double diametr = 0;
-	bool repair = false;
-public:
 	int id = 0;
-	std::string name = "None";
-	void edit(Pipe& pipe);
-	void Writing_to_file(Pipe& pipe);
-	void Read_from_file(Pipe& pipe);
+public:
+	bool repair = false;
+	static int NextId;
+	Pipe();
+	int GetId() const;
+	void ChangeStatus(Pipe& pipe);
+	std::string ReturningThePipeName() const;
+	bool ReturningThePipeRepair() const;
 	friend std::istream& operator>>(std::istream& in, Pipe& p);
-	friend std::ostream& operator<< (std::ostream& out,  Pipe& pipe);
-	friend std::ofstream& operator << (std::ofstream& file, Pipe& pipe);
+	friend std::ostream& operator<< (std::ostream& out, const Pipe& pipe);
+	friend std::ofstream& operator << (std::ofstream& file, const Pipe& pipe);
 	friend std::ifstream& operator >> (std::ifstream& file, Pipe& pipe);
-
-
 };
 

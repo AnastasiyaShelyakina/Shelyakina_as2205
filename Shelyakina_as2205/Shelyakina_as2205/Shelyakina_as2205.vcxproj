@@ -129,12 +129,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cs.cpp" />
+    <ClCompile Include="GusSupplySystem.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Shelyakina_as2205.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cs.h" />
+    <ClInclude Include="GusSupplySystem.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

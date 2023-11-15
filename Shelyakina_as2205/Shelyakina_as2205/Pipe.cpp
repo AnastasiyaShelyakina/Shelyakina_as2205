@@ -5,7 +5,7 @@ using namespace std;
 
 istream& operator>>(istream& in, Pipe& p)
 {
-	cout << "Enter the name of the pipeeee: ";
+	cout << "Enter the name of the pipeeeeeee: ";
 	cin.ignore();
 	cin >> ws;
 	getline(in, p.name);
@@ -18,15 +18,16 @@ istream& operator>>(istream& in, Pipe& p)
 	return in;
 }
 
-ostream& operator <<(ostream& out, Pipe& pipe) {
+ostream& operator <<(ostream& out, const Pipe& pipe) {
+	out << "Pipe id: " << pipe.id << endl;
 	out << "Pipe name: " << pipe.name << endl;
 	out << "Length: " << pipe.lenght << " km" << endl;
 	out << "Diameter: " << pipe.diametr << " mm" << endl;
 	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
 	return out;
 }
-ofstream& operator << (ofstream& file, Pipe& pipe) {
-	file << "Pipe" << endl;
+ofstream& operator << (ofstream& file, const Pipe& pipe) {
+	file << pipe.id<< endl;
 	file << pipe.name << endl;
 	file << pipe.lenght << endl;
 	file << pipe.diametr << endl;
@@ -34,40 +35,34 @@ ofstream& operator << (ofstream& file, Pipe& pipe) {
 	return file;
 }
 ifstream& operator >> (ifstream& file, Pipe& pipe) {
+	file>> pipe.id;
+	file >> ws;
 	getline(file, pipe.name);
 	file >> pipe.lenght;
 	file >> pipe.diametr;
 	file >> pipe.repair;
 	return file;
 }
-void Pipe::edit(Pipe& pipe) {
+
+
+int Pipe::GetId()const { return id; }
+int Pipe::NextId = 0;
+Pipe::Pipe() {
+	id = NextId++;
+}
+
+void Pipe::ChangeStatus(Pipe& pipe) {
 	pipe.repair = !pipe.repair;
 }
 
-void Pipe::Writing_to_file(Pipe& pipe) {
-	ofstream file;
-	file.open("lab1.txt");
-	if (!file)
-		cout << "file is not found" << endl;
-	else {
-		if (pipe.lenght > 0)
-			file << pipe << endl;
-	}
-
-	file.close();
-}
-void Pipe::Read_from_file(Pipe& pipe)
+std::string Pipe::ReturningThePipeName() const
 {
-	ifstream fin("lab1.txt");
-	if (fin)
-	{
-		string name_of_cs_or_truba = "";
-		while (getline(fin, name_of_cs_or_truba))
-		{
-			if (name_of_cs_or_truba == "Pipe")
-				fin >> pipe;
-		}
+	return name;
+}
 
-		fin.close();
-	}
+
+
+bool Pipe::ReturningThePipeRepair() const
+{
+	return repair;
 }

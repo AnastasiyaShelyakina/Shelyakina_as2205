@@ -2,6 +2,15 @@
 #include "utils.h"
 using namespace std;
 
+
+int Cs::GetId()const { return id; }
+int Cs::NextId = 0;
+Cs::Cs() {
+	id = NextId++;
+}
+
+
+
 istream& operator>>(istream& in, Cs& station)
 {
 	cout << "Enter the name of the compressor station : ";
@@ -17,52 +26,48 @@ istream& operator>>(istream& in, Cs& station)
 	return in;
 };
 
-ostream& operator <<(ostream& out,  Cs& station) {
-	out << "Compressor station vame: " << station.name << endl;
+ostream& operator <<(ostream& out, const  Cs& station) {
+	out << "Compressor id: " << station.id << endl;
+	out << "Compressor station name: " << station.name << endl;
 	out << "Number of workshops:" << station.workshops << endl;
 	out << "Number of workshops in operation:" << station.workshops_work << endl;
 	out << "Effect: " << station.effect << endl;
 	return out;
 }
-ofstream& operator << (ofstream& file, Cs& station) {
-	file << "Station" << endl;
+ofstream& operator << (ofstream& file, const Cs& station) {
+	file << station.id << endl;
 	file << station.name << endl;
 	file << station.workshops << endl;
 	file << station.workshops_work << endl;
 	file << station.effect << endl;
 	return file;
 }
-ifstream& operator >> (ifstream& fin, Cs& station) {
-	getline(fin, station.name);
-	fin >> station.workshops;
-	fin >> station.workshops_work;
-	fin >> station.effect;
-	return fin;
+ifstream& operator >> (ifstream& file, Cs& station) {
+	file >> station.id;
+	file >> ws;
+	getline(file, station.name);
+	file >> station.workshops;
+	file >> station.workshops_work;
+	file >> station.effect;
+	return file;
 }
-void Cs::Writing_to_file(Cs& station) {
-	ofstream file;
-	file.open("lab1.txt");
-	if (!file)
-		cout << "file is not found" << endl;
-	else {
-		if (station.workshops > 0)
-			file << station << endl;
-	}
 
-	file.close();
+
+
+void Cs::ChangeStatusCS(Cs& station) {
+	cout << "Number of workshops in operation:" <<endl;
+	workshops_work = GetCorrectNumber(0, workshops);
 }
-void Cs::Read_from_file(Cs& st)
+
+
+std::string Cs::ReturningTheCSName() const
 {
-	ifstream fin("lab1.txt");
-	if (fin)
-	{
-		string name_of_cs_or_truba = "";
-		while (getline(fin, name_of_cs_or_truba))
-		{
-			if (name_of_cs_or_truba == "Station")
-				fin >> st;
-		}
+	return name;
+}
 
-		fin.close();
-	}
+
+double Cs::GetPercentUnused() const
+{
+	return 100.0-double((workshops_work/ workshops)*100);
+	//return (1 -((double)workshops_work - double(workshops))) * 100;
 }
