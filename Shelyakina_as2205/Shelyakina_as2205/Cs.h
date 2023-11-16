@@ -17,11 +17,10 @@ private:
 public:
 
 
+	static int NextId;
 	void ChangeStatusCS(Cs& station);
 	std::string ReturningTheCSName() const;
 	double GetPercentUnused() const;
-
-	static int NextId;
 	Cs();
 	int GetId() const;
 	int workshops_work = 0;

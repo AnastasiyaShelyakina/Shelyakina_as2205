@@ -27,7 +27,7 @@ int main()
 	if (logfile)
 		cerr_out.redirect(logfile);
 	
-	GasTransportSystem GSS;
+	GasTransportationSystem GST;
 	while (true)
 	{
 		cout << "Menu:" << endl;
@@ -43,39 +43,39 @@ int main()
 		{
 		case 1:
 		{
-			GSS.Add(GSS.GetPipes());
+			GST.Add(GST.GetPipes());
 			break;
 		}
 		case 2:
 		{
-			GSS.Add(GSS.GetCS());
+			GST.Add(GST.GetCS());
 			break;
 		}
 		case 3:
 		{
-			GSS.Show();
+			GST.Show();
 			break;
 		}
 		case 4:
 		{
-			GSS.EditPipe();
+			GST.EditPipe();
 			break;
 		}
 		case 5:
 		{
-			GSS.EditCS();
+			GST.EditCS();
 			break;
 		}
 	
 		case 6:
 		{
-			GSS.Writing_to_file();
+			GST.Writing_to_file();
 			cout << "saved successfully" << endl;
 			break;
 		}
 		case 7:
 		{
-			GSS.Read_from_file();
+			GST.Read_from_file();
 			cout << "load successfully" << endl;
 			break;
 		}

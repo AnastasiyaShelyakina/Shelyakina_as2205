@@ -16,7 +16,7 @@ istream& operator>>(istream& in, Cs& station)
 	cout << "Enter the name of the compressor station : ";
 	INPUT_LINE(in, station.name);
 	cout << "Enter the number of workshops at the station : ";
-	station.workshops = GetCorrectNumber(0, 100);
+	station.workshops = GetCorrectNumber(0, 100000);
 	cout << "Enter the number of workshops in operation: ";
 	station.workshops_work = GetCorrectNumber(0, station.workshops);
 	cout << "Enter effect:";

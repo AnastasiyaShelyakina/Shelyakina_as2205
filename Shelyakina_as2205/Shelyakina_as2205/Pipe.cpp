@@ -5,7 +5,7 @@ using namespace std;
 
 istream& operator>>(istream& in, Pipe& p)
 {
-	cout << "Enter the name of the pipeeeeeee: ";
+	cout << "Enter the name of the pipe: ";
 	INPUT_LINE(in, p.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
 	p.lenght = GetCorrectNumber(1.00, 100.00);
