@@ -9,7 +9,7 @@ private:
 	std::string name = "None";
 	double lenght = 0;
 	double diametr = 0;
-	int id = 0;
+	int id = 1;
 public:
 	bool repair = false;
 	static int NextId;

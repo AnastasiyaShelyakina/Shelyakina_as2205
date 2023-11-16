@@ -7,6 +7,7 @@
 
 #define INPUT_LINE(in, str) getline(in>>std::ws, str); \
 						std::cerr << str << std::endl
+
 #define PRINT_PARAM(out, x) out<< #x << "=" << x << std::endl
 
 class redirect_output_wrapper

@@ -3,9 +3,10 @@
 using namespace std;
 string EnterLine()
 {
+
+
 	string line;
-	cin >> ws;
-	getline(cin, line);
+	INPUT_LINE(cin, line);
 	return line;
 }
 

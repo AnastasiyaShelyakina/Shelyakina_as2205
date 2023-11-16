@@ -67,8 +67,8 @@ void GasTransportationSystem::Read_from_file() {
 
 
 void EditOnePipe(unordered_map<int, Pipe>& pipe_map) {
-	cout << "Enter ID of pipe (0 - " << Pipe::NextId++ - 1 << "): ";
-	int id = GetCorrectNumber(0, Pipe::NextId++ - 1);
+	cout << "Enter ID of pipe (0 - " << Pipe::NextId - 1 << "): ";
+	int id = GetCorrectNumber(0, Pipe::NextId - 1);
 	if (pipe_map.count(id) != 0) {
 		pipe_map.at(id).ChangeStatus(pipe_map.at(id));
 		cout << "Status was changed!\n";
@@ -228,8 +228,6 @@ void GasTransportationSystem::EditPipe()
 
 
 
-
-
 bool CheckCSName(const Cs& cs, std::string name)
 {
 	return (cs.ReturningTheCSName().find(name) != std::string::npos);
@@ -247,8 +245,8 @@ void ShowObjectsCS(std::unordered_map<int, Cs>& cs_map, std::unordered_set<int>&
 
 
 void EditOneCS(unordered_map<int, Cs>& cs_map) {
-	cout << "Enter ID of cs (0 - " << Cs::NextId++ - 1 << "): ";
-	int id = GetCorrectNumber(0, Cs::NextId++ - 1);
+	cout << "Enter ID of cs (0 - " << Cs::NextId - 1 << "): ";
+	int id = GetCorrectNumber(0, Cs::NextId - 1);
 	if (cs_map.count(id) != 0) {
 		cs_map[id].ChangeStatusCS(cs_map[id]);
 		cout << "Status was changed!\n";

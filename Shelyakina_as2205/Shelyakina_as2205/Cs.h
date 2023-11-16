@@ -6,7 +6,7 @@ class Cs
 {
 
 private:
-	int id = 0;
+	int id = 1;
 	std::string name = "None";
 	int workshops = 0;
 	double effect = 0;
@@ -17,10 +17,11 @@ private:
 public:
 
 
-	static int NextId;
 	void ChangeStatusCS(Cs& station);
 	std::string ReturningTheCSName() const;
 	double GetPercentUnused() const;
+
+	static int NextId;
 	Cs();
 	int GetId() const;
 	int workshops_work = 0;

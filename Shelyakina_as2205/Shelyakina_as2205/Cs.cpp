@@ -4,7 +4,7 @@ using namespace std;
 
 
 int Cs::GetId()const { return id; }
-int Cs::NextId = 0;
+int Cs::NextId = 1;
 Cs::Cs() {
 	id = NextId++;
 }
