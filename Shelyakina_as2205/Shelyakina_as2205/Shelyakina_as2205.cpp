@@ -7,7 +7,12 @@
 #include "Cs.h"
 #include "Pipe.h"
 #include "utils.h"
-#include "GusSupplySystem.h"
+#include "GasTransportationSystem.h"
+
+
+#include <chrono>
+#include <format>
+using namespace std::chrono;
 
 using namespace std;
 
@@ -15,7 +20,14 @@ using namespace std;
 int main()
 
 {
-	GasSupplySystem GSS;
+	
+	redirect_output_wrapper cerr_out(cerr);
+	string time = std::format("{:%d_%m_%Y %H_%M_%OS}", system_clock::now());
+	ofstream logfile("log_" + time+".txt");
+	if (logfile)
+		cerr_out.redirect(logfile);
+	
+	GasTransportSystem GSS;
 	while (true)
 	{
 		cout << "Menu:" << endl;
@@ -41,7 +53,6 @@ int main()
 		}
 		case 3:
 		{
-			cout << "3. View all object" << endl;
 			GSS.Show();
 			break;
 		}
@@ -58,14 +69,12 @@ int main()
 	
 		case 6:
 		{
-			cout << "6. Save" << endl;
 			GSS.Writing_to_file();
 			cout << "saved successfully" << endl;
 			break;
 		}
 		case 7:
 		{
-			cout << "7. Dowload" << endl;
 			GSS.Read_from_file();
 			cout << "load successfully" << endl;
 			break;
@@ -73,7 +82,6 @@ int main()
 		
 		case 8:
 		{
-			cout << "8. Exit" << endl;
 			return false;
 		}
 		default:

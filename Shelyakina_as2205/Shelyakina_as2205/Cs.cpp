@@ -14,9 +14,7 @@ Cs::Cs() {
 istream& operator>>(istream& in, Cs& station)
 {
 	cout << "Enter the name of the compressor station : ";
-	cin.ignore();
-	cin >> ws;
-	getline(in, station.name);
+	INPUT_LINE(in, station.name);
 	cout << "Enter the number of workshops at the station : ";
 	station.workshops = GetCorrectNumber(0, 100);
 	cout << "Enter the number of workshops in operation: ";
@@ -27,11 +25,11 @@ istream& operator>>(istream& in, Cs& station)
 };
 
 ostream& operator <<(ostream& out, const  Cs& station) {
-	out << "Compressor id: " << station.id << endl;
-	out << "Compressor station name: " << station.name << endl;
-	out << "Number of workshops:" << station.workshops << endl;
-	out << "Number of workshops in operation:" << station.workshops_work << endl;
-	out << "Effect: " << station.effect << endl;
+	PRINT_PARAM(cout, station.id);
+	PRINT_PARAM(cout, station.name);
+	PRINT_PARAM(cout, station.workshops);
+	PRINT_PARAM(cout, station.workshops_work);
+	PRINT_PARAM(cout, station.effect);
 	return out;
 }
 ofstream& operator << (ofstream& file, const Cs& station) {
@@ -69,5 +67,4 @@ std::string Cs::ReturningTheCSName() const
 double Cs::GetPercentUnused() const
 {
 	return 100.0-double((workshops_work/ workshops)*100);
-	//return (1 -((double)workshops_work - double(workshops))) * 100;
 }

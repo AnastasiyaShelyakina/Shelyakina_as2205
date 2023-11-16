@@ -6,9 +6,7 @@ using namespace std;
 istream& operator>>(istream& in, Pipe& p)
 {
 	cout << "Enter the name of the pipeeeeeee: ";
-	cin.ignore();
-	cin >> ws;
-	getline(in, p.name);
+	INPUT_LINE(in, p.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
 	p.lenght = GetCorrectNumber(1.00, 100.00);
 	cout << "Enter the diameter of the pipe (in mmeters): ";
@@ -19,11 +17,11 @@ istream& operator>>(istream& in, Pipe& p)
 }
 
 ostream& operator <<(ostream& out, const Pipe& pipe) {
-	out << "Pipe id: " << pipe.id << endl;
-	out << "Pipe name: " << pipe.name << endl;
-	out << "Length: " << pipe.lenght << " km" << endl;
-	out << "Diameter: " << pipe.diametr << " mm" << endl;
-	out << "Under Repair: " << (pipe.repair ? "in repair" : " not in repair") << endl;
+	PRINT_PARAM(cout, pipe.id);
+	PRINT_PARAM(cout, pipe.name);
+	PRINT_PARAM(cout, pipe.lenght);
+	PRINT_PARAM(cout, pipe.diametr);
+	PRINT_PARAM(cout, (pipe.repair ? "in repair" : " not in repair"));
 	return out;
 }
 ofstream& operator << (ofstream& file, const Pipe& pipe) {
