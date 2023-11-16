@@ -10,18 +10,22 @@ private:
 	std::string name = "None";
 	int workshops = 0;
 	double effect = 0;
-
+	static int NextId;
 
 
 
 public:
 
 
+	std::string GetThePipeNameCs() const;
+	static int GetNextId();
+	static void SetNextId(int newNextId);
+
+
 	void ChangeStatusCS(Cs& station);
-	std::string ReturningTheCSName() const;
+	//std::string ReturningTheCSName() const;
 	double GetPercentUnused() const;
 
-	static int NextId;
 	Cs();
 	int GetId() const;
 	int workshops_work = 0;

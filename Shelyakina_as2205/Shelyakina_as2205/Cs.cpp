@@ -2,7 +2,12 @@
 #include "utils.h"
 using namespace std;
 
-
+int Cs::GetNextId() {
+	return NextId;
+}
+void Cs::SetNextId(int newNextId) {
+	NextId = newNextId;
+}
 int Cs::GetId()const { return id; }
 int Cs::NextId = 1;
 Cs::Cs() {
@@ -58,11 +63,10 @@ void Cs::ChangeStatusCS(Cs& station) {
 }
 
 
-std::string Cs::ReturningTheCSName() const
+std::string Cs::GetThePipeNameCs() const
 {
 	return name;
 }
-
 
 double Cs::GetPercentUnused() const
 {

@@ -10,13 +10,22 @@ private:
 	double lenght = 0;
 	double diametr = 0;
 	int id = 1;
+	static int NextId;
 public:
 	bool repair = false;
-	static int NextId;
+	//static int NextId;
 	Pipe();
 	int GetId() const;
 	void ChangeStatus(Pipe& pipe);
-	std::string ReturningThePipeName() const;
+
+
+	std::string GetThePipeName() const;
+	static int GetNextId();
+	static void SetNextId(int newNextId);
+
+
+
+	//std::string ReturningThePipeName() const;
 	bool ReturningThePipeRepair() const;
 	friend std::istream& operator>>(std::istream& in, Pipe& p);
 	friend std::ostream& operator<< (std::ostream& out, const Pipe& pipe);

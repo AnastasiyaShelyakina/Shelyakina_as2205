@@ -43,7 +43,16 @@ ifstream& operator >> (ifstream& file, Pipe& pipe) {
 }
 
 
+
 int Pipe::GetId()const { return id; }
+
+
+int Pipe::GetNextId(){
+	return NextId;
+}
+void Pipe::SetNextId(int newNextId) {
+	NextId = newNextId;
+}
 int Pipe::NextId = 1;
 Pipe::Pipe() {
 	id = NextId++;
@@ -53,11 +62,10 @@ void Pipe::ChangeStatus(Pipe& pipe) {
 	pipe.repair = !pipe.repair;
 }
 
-std::string Pipe::ReturningThePipeName() const
+std::string Pipe::GetThePipeName() const
 {
 	return name;
 }
-
 
 
 bool Pipe::ReturningThePipeRepair() const
