@@ -40,35 +40,42 @@ void GasTransportationSystem::Read_from_file() {
 	int num_cs;
 	Pipe p;
 	Cs cs;
-	//Pipe::NextId = 0;
-	//Cs::NextId = 0;
 
 	if (file) {
 		file >> num_pipe >> num_cs;
 		for (int i = 0; i < num_pipe; i++) {
 			file >> p;
 			pipe_map.insert({ p.GetId(), p });
-			if (p.GetId() > Pipe::GetNextId())
-				Pipe::SetNextId(p.GetId());
 		}
 		for (int i = 0; i < num_cs; i++) {
 			file >> cs;
 			cs_map.insert({ cs.GetId(), cs });
-			if (cs.GetId() > Cs::GetNextId())
-				Cs::SetNextId(cs.GetId()) ;
 		}
-		Pipe::SetNextId(Pipe::GetNextId()+1);
-		Cs::SetNextId(Cs::GetNextId() + 1);
 	}
 	else {
-		cout << "File is not found";
+		cout << "File is not found\n";
 	}
 }
 
 
+unordered_set<int> GetEditNumbers(unordered_set<int> result)
+{
+	unordered_set<int> IDs;
+	int id;
+	int Max_ID = Pipe::GetNextId();
+	do {
+		id = GetCorrectNumber(0, Max_ID);
+		if (result.contains(id)) {
+			IDs.insert(id);
+		}
+	} while (id != 0);
+
+	return IDs;
+}
+
 void EditOnePipe(unordered_map<int, Pipe>& pipe_map) {
-	cout << "Enter ID of pipe (1 - " << Pipe::GetNextId() - 1 << "): ";
-	int id = GetCorrectNumber(0, Pipe::GetNextId() - 1);
+	cout << "Enter ID of pipe (1 - " << Pipe::GetNextId() << "): ";
+	int id = GetCorrectNumber(0, Pipe::GetNextId() );
 	if (pipe_map.count(id) != 0) {
 		pipe_map[id].ChangeStatus(pipe_map[id]);
 		cout << "Status was changed!\n";
@@ -99,12 +106,14 @@ void ShowObjects(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int
 void EditPipes(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int>& id_set)
 {
 	ShowObjects(pipe_map, id_set);
+	cout << "enter 0 if you want to change all pipes or enter the necessary ids in order, enter 0 to finish" << endl;
+	unordered_set<int> numbers = GetEditNumbers(id_set);
 	MenuEditByFilter();
 	switch (GetCorrectNumber(0, 3))
 	{
 	case 1:
 	{
-		for (auto& id : id_set) {
+		for (auto& id : numbers) {
 			pipe_map[id].ChangeStatus(pipe_map[id]);
 		}
 		std::cout << "Status was changed!\n";
@@ -112,7 +121,7 @@ void EditPipes(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int>&
 	}
 	case 2:
 	{
-		for (auto& id : id_set) {
+		for (auto& id : numbers) {
 			if ((pipe_map[id]).repair == false)
 				pipe_map[id].ChangeStatus(pipe_map[id]);
 		}
@@ -121,7 +130,7 @@ void EditPipes(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int>&
 	}
 	case 3:
 	{
-		for (auto& id : id_set) {
+		for (auto& id : numbers) {
 			if ((pipe_map[id]).repair == true)
 				pipe_map[id].ChangeStatus(pipe_map[id]);
 		}
@@ -146,6 +155,7 @@ void EditPackagePipe(unordered_map<int, Pipe>& pipe_map) {
 		cout << "Enter name of pipe: ";
 		unordered_set id_set = FindByFilter(pipe_map, CheckName, EnterLine());
 		if (CheckBySetSize(id_set))
+
 			EditPipes(pipe_map, id_set);
 		break;
 	}
@@ -178,8 +188,8 @@ void EditAllPipes(std::unordered_map<int, Pipe>& pipe_map)
 
 
 void DeletePipe(std::unordered_map<int, Pipe>& pipe_map) {
-	std::cout << "Enter ID of pipe (1 - " << Pipe::GetNextId() - 1 << "): ";
-	int id = GetCorrectNumber(0, Pipe::GetNextId() - 1);
+	std::cout << "Enter ID of pipe (1 - " << Pipe::GetNextId()<< "): ";
+	int id = GetCorrectNumber(0, Pipe::GetNextId());
 	if (pipe_map.count(id) != 0) {
 		pipe_map.erase(id);
 		std::cout << "Pipe was deleted!\n";
@@ -245,8 +255,8 @@ void ShowObjectsCS(std::unordered_map<int, Cs>& cs_map, std::unordered_set<int>&
 
 
 void EditOneCS(unordered_map<int, Cs>& cs_map) {
-	cout << "Enter ID of cs (1 - " << Cs::GetNextId() - 1 << "): ";
-	int id = GetCorrectNumber(0, Cs::GetNextId() - 1);
+	cout << "Enter ID of cs (1 - " << Cs::GetNextId() << "): ";
+	int id = GetCorrectNumber(0, Cs::GetNextId() );
 	if (cs_map.count(id) != 0) {
 		cs_map[id].ChangeStatusCS(cs_map[id]);
 		cout << "Status was changed!\n";
@@ -258,7 +268,9 @@ void EditOneCS(unordered_map<int, Cs>& cs_map) {
 void EditCss(std::unordered_map<int, Cs>& cs_map, std::unordered_set<int>& id_set)
 {
 	ShowObjectsCS(cs_map, id_set);
-	for (auto& id : id_set)
+	cout << "enter 0 if you want to change all cs or enter the necessary ids in order, enter 0 to finish" << endl;
+	unordered_set<int> numbers = GetEditNumbers(id_set);
+	for (auto& id : numbers)
 		if (cs_map.find(id) != cs_map.end()) {
 			cs_map[id].ChangeStatusCS(cs_map[id]);
 			std::cout << "The number of working shops of the compressor station has been changed\n";
@@ -306,9 +318,10 @@ void EditAllCS(std::unordered_map<int, Cs>& cs_map)
 	EditCss(cs_map, id_set);
 }
 
+
 void DeleteCS(std::unordered_map<int, Cs>& cs_map) {
-	std::cout << "Enter ID of CS (1 - " << Cs::GetNextId() - 1 << "): ";
-	int id = GetCorrectNumber(0, Cs::GetNextId() - 1);
+	std::cout << "Enter ID of CS (1 - " << Cs::GetNextId() << "): ";
+	int id = GetCorrectNumber(0, Cs::GetNextId());
 	if (cs_map.count(id) != 0) {
 		cs_map.erase(id);
 		std::cout << "CS was deleted!\n";
@@ -323,7 +336,7 @@ void GasTransportationSystem::EditCS()
 {
 	if (cs_map.size() != 0) {
 		MenuEditStation();
-		switch (GetCorrectNumber(0, 3)) {
+		switch (GetCorrectNumber(0, 4)) {
 		case 1:
 		{
 			EditOneCS(cs_map);

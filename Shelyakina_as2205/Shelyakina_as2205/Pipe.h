@@ -18,10 +18,9 @@ public:
 	int GetId() const;
 	void ChangeStatus(Pipe& pipe);
 
-
 	std::string GetThePipeName() const;
 	static int GetNextId();
-	static void SetNextId(int newNextId);
+	//static void SetNextId(int newNextId);
 
 
 

@@ -5,7 +5,7 @@ using namespace std;
 
 istream& operator>>(istream& in, Pipe& p)
 {
-	cout << "Enter the name of the pipeeee: ";
+	cout << "Enter the name of the pipe: ";
 	INPUT_LINE(in, p.name);
 	cout << "Enter the length of the pipe (in kilometers): ";
 	p.lenght = GetCorrectNumber(1.00, 100.00);
@@ -39,6 +39,7 @@ ifstream& operator >> (ifstream& file, Pipe& pipe) {
 	file >> pipe.lenght;
 	file >> pipe.diametr;
 	file >> pipe.repair;
+	Pipe::NextId = (Pipe::NextId < pipe.id) ? pipe.id : Pipe::NextId;
 	return file;
 }
 
@@ -50,14 +51,13 @@ int Pipe::GetId()const { return id; }
 int Pipe::GetNextId(){
 	return NextId;
 }
-void Pipe::SetNextId(int newNextId) {
-	NextId = newNextId;
-}
-int Pipe::NextId = 1;
+//void Pipe::SetNextId(int newNextId) {
+//	NextId = newNextId;
+//}
+int Pipe::NextId = 0;
 Pipe::Pipe() {
-	id = NextId++;
+	id =++ NextId;
 }
-
 void Pipe::ChangeStatus(Pipe& pipe) {
 	pipe.repair = !pipe.repair;
 }

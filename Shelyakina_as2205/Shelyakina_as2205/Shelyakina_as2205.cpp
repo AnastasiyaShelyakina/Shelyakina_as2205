@@ -76,7 +76,7 @@ int main()
 		case 7:
 		{
 			GST.Read_from_file();
-			cout << "load successfully" << endl;
+			//cout << "load successfully" << endl;
 			break;
 		}
 		

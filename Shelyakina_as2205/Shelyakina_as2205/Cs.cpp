@@ -9,9 +9,9 @@ void Cs::SetNextId(int newNextId) {
 	NextId = newNextId;
 }
 int Cs::GetId()const { return id; }
-int Cs::NextId = 1;
+int Cs::NextId = 0;
 Cs::Cs() {
-	id = NextId++;
+	id = ++ NextId;
 }
 
 
@@ -52,6 +52,7 @@ ifstream& operator >> (ifstream& file, Cs& station) {
 	file >> station.workshops;
 	file >> station.workshops_work;
 	file >> station.effect;
+	Cs::NextId = (Cs::NextId < station.id) ? station.id : Cs::NextId;
 	return file;
 }
 

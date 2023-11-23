@@ -70,7 +70,7 @@
 //    cout << "Enter ID of pipe (0 - " << Pipe::NextId++ - 1 << "): ";
 //    int id = GetCorrectNumber(0, Pipe::NextId++ - 1);
 //    if (pipe_map.count(id) != 0) {
-//        pipe_map.at(id).ChangeStatus(pipe_map.at(id));
+//        pipe_map[id].ChangeStatus(pipe_map[id]);
 //        cout << "Status was changed!\n";
 //    }
 //    else
@@ -93,7 +93,7 @@
 //}
 //void ShowObjects(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int>& id_set) {
 //	for (auto& id : id_set) {
-//		std::cout << pipe_map.at(id);
+//		std::cout << pipe_map[id];
 //	}
 //}
 //void EditPipes(std::unordered_map<int, Pipe>& pipe_map, std::unordered_set<int>& id_set)
@@ -105,7 +105,7 @@
 //	case 1:
 //	{
 //		for (auto& id : id_set) {
-//			pipe_map.at(id).ChangeStatus(pipe_map.at(id));
+//			pipe_map[id].ChangeStatus(pipe_map[id]);
 //		}
 //		std::cout << "Status was changed!\n";
 //		break;
@@ -113,8 +113,8 @@
 //	case 2:
 //	{
 //		for (auto& id : id_set) {
-//			if ((pipe_map.at(id)).repair ==false)
-//				pipe_map.at(id).ChangeStatus(pipe_map.at(id));
+//			if ((pipe_map[id]).repair ==false)
+//				pipe_map[id].ChangeStatus(pipe_map[id]);
 //		}
 //		std::cout << "Status was changed!\n";
 //		break;
@@ -122,8 +122,8 @@
 //	case 3:
 //	{
 //		for (auto& id : id_set) {
-//			if ((pipe_map.at(id)).repair == true)
-//				pipe_map.at(id).ChangeStatus(pipe_map.at(id));
+//			if ((pipe_map[id]).repair == true)
+//				pipe_map[id].ChangeStatus(pipe_map[id]);
 //		}
 //		std::cout << "Status was changed!\n";
 //		break;
@@ -241,7 +241,7 @@
 //
 //void ShowObjectsCS(std::unordered_map<int, Cs>& cs_map, std::unordered_set<int>& id_set) {
 //	for (auto& id : id_set) {
-//		std::cout << cs_map.at(id);
+//		std::cout << cs_map[id];
 //	}
 //}
 //

@@ -31,8 +31,8 @@ void MenuEditByFilter()
 
 void MenuEditStation()
 {
-	std::cout << "1. Edit one station\n" << "2. Edit station package\n"
-		<< "3. Delete\n" << "0. Back to menu\n";
+	std::cout << "1. Edit one station\n" << "2. Edit station package\n" << "3. Edit all station\n" 
+		<< "4. Delete\n" << "0. Back to menu\n";
 }
 void MenuEditPackageCS()
 {
