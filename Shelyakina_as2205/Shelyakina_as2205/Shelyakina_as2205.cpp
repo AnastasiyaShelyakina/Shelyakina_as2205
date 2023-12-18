@@ -22,7 +22,7 @@ int main()
 {
 	
 	redirect_output_wrapper cerr_out(cerr);
-	string time = std::format("{:%d_%m_%Y %H_%M_%OS}", system_clock::now());
+	string time = std::format("{:%d_%m_%Y_%H_%M_%OS}", system_clock::now());
 	ofstream logfile("log_" + time+".txt");
 	if (logfile)
 		cerr_out.redirect(logfile);
@@ -38,8 +38,9 @@ int main()
 		cout << "5. Edit Compressor Station" << endl;
 		cout << "6. Save" << endl;
 		cout << "7. Load" << endl;
-		cout << "8. Exit" << endl;
-		switch (GetCorrectNumber(1,8))
+		cout << "8. Conactions" << endl;
+		cout << "9. Exit" << endl;
+		switch (GetCorrectNumber(1,9))
 		{
 		case 1:
 		{
@@ -76,11 +77,14 @@ int main()
 		case 7:
 		{
 			GST.Read_from_file();
-			//cout << "load successfully" << endl;
 			break;
 		}
-		
 		case 8:
+		{
+			GST.ConnectingStations();
+			break;
+		}
+		case 9:
 		{
 			return false;
 		}

@@ -23,7 +23,6 @@ public:
 
 
 	void ChangeStatusCS(Cs& station);
-	//std::string ReturningTheCSName() const;
 	double GetPercentUnused() const;
 
 	Cs();

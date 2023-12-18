@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Cs.cpp" />
     <ClCompile Include="GasTransportationSystem.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GusSupplySystem.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Shelyakina_as2205.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Cs.h" />
     <ClInclude Include="GasTransportationSystem.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="GusSupplySystem.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="utils.h" />

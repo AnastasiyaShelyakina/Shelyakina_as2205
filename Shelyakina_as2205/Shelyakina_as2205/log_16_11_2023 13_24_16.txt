@@ -1,0 +1,47 @@
+1
+pipe 1 
+100
+10
+1
+1
+pipe 2
+23
+98
+0
+1
+pipe 3
+67
+62
+1
+1
+pipe 4
+32
+56
+0
+1
+pipe 3
+78
+43
+1
+1
+nepipe 1
+11
+11
+1
+1
+nepipe 23
+2
+3
+0
+6
+proverka.txt
+7
+proverka.txt
+3
+4
+2
+2
+0
+2
+3
+8

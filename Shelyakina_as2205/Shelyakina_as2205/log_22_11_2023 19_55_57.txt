@@ -1,0 +1,24 @@
+7
+data.txt
+3
+1
+pipe 2
+2
+2
+1
+1
+pipe 3
+1
+1
+1
+6
+experiment.txt
+7
+experiment.txt
+3
+4
+4
+2
+6
+exe.txt
+8

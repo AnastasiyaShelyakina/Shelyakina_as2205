@@ -30,7 +30,14 @@ public:
 };
 
 
-
+template <typename T>
+bool ObjectsExist(const T& objects)
+{
+    if (objects.size() == 0) {
+        return false;
+    }
+    return true;
+}
 
 
 template <typename T>
@@ -89,3 +96,4 @@ void MenuEditPackageP();
 void MenuEditByFilter();
 void MenuEditStation();
 void MenuEditPackageCS();
+void MenuConnectingStations();

@@ -9,7 +9,6 @@ string EnterLine()
 	INPUT_LINE(cin, line);
 	return line;
 }
-
 void MenuEditPipe()
 {
 	cout << "1. Edit one pipe\n" << "2. Edit pipe package\n"
@@ -37,4 +36,8 @@ void MenuEditStation()
 void MenuEditPackageCS()
 {
 	cout << "1. Search by name\n" << "2. Search by percentage of unused shops\n" << "0. Back to menu\n";
+}
+void MenuConnectingStations()
+{
+	cout << "1. Connect stations\n" << "2. Topological sorting\n" << "3. Delete connection\n" <<"4. View Topological sorting\n"<< "0. Back to menu\n";
 }

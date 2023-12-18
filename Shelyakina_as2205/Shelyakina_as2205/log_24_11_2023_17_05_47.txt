@@ -1,0 +1,9 @@
+Menu:
+1. Add Pipe
+2. Add Compressor Station
+3. View all objects
+4. Edit Pipe
+5. Edit Compressor Station
+6. Save
+7. Load
+8. Exit

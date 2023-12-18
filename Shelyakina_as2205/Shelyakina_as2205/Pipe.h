@@ -8,24 +8,36 @@ class Pipe
 private:
 	std::string name = "None";
 	double lenght = 0;
-	double diametr = 0;
+	int diametr = 0;
 	int id = 1;
 	static int NextId;
+	static int pipe_diameters[];
 public:
+
+	static int EnterCorrectDiameter();
+
+
 	bool repair = false;
-	//static int NextId;
-	Pipe();
+	Pipe(); 
+
+
+	int GetDiameter() const;
+	void SetDiameter(int d);
+
+
 	int GetId() const;
 	void ChangeStatus(Pipe& pipe);
 
 	std::string GetThePipeName() const;
 	static int GetNextId();
-	//static void SetNextId(int newNextId);
 
 
 
-	//std::string ReturningThePipeName() const;
 	bool ReturningThePipeRepair() const;
+
+	//friend void InitPipe(Pipe& p, bool with_diameter);
+
+
 	friend std::istream& operator>>(std::istream& in, Pipe& p);
 	friend std::ostream& operator<< (std::ostream& out, const Pipe& pipe);
 	friend std::ofstream& operator << (std::ofstream& file, const Pipe& pipe);

@@ -1,0 +1,9 @@
+7
+proverka.txt
+4
+2
+1
+pipe
+0
+1
+8

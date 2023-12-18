@@ -2,20 +2,67 @@
 #include "utils.h"
 using namespace std;
 
+int Pipe::pipe_diameters[] = { 500, 700, 1000, 1400 };
+int Pipe::NextId = 0;
+int Pipe::EnterCorrectDiameter()
+{
+	cout << "Diameter (500, 700, 1000, 1400 mm): ";
+	int diameter = GetCorrectNumber(1, INT_MAX);
+	while (!count(begin(pipe_diameters), end(pipe_diameters), diameter)) {
+		cout << "Enter the correct diameter (500, 700, 1000, 1400 mm): ";
+		diameter = GetCorrectNumber(1, INT_MAX);
+	}
+	return diameter;
+}
+void Pipe::ChangeStatus(Pipe& pipe) {
+	pipe.repair = !pipe.repair;
+
+}
+int Pipe::GetNextId() {
+	return NextId;
+}
+std::string Pipe::GetThePipeName() const
+{
+	return name;
+}
+int Pipe::GetDiameter() const
+{
+	return diametr;
+}
+int Pipe::GetId()const { return id; }
+void Pipe::SetDiameter(int d)
+{
+	diametr = d;
+}
+
+
+Pipe::Pipe() {
+	id =++ NextId;
+}
+
+
+bool Pipe::ReturningThePipeRepair() const
+{
+	return repair;
+}
 
 istream& operator>>(istream& in, Pipe& p)
 {
 	cout << "Enter the name of the pipe: ";
 	INPUT_LINE(in, p.name);
-	cout << "Enter the length of the pipe (in kilometers): ";
-	p.lenght = GetCorrectNumber(1.00, 100.00);
-	cout << "Enter the diameter of the pipe (in mmeters): ";
-	p.diametr = GetCorrectNumber(1.00, 100.00);
+	cout << "Enter the length of the pipe (in kilometers):";
+	p.lenght = GetCorrectNumber(1.00, 500.00);
+	if (p.diametr == 0) {
+		cout << "Enter the diameter of the pipe: ";
+		p.diametr = GetCorrectNumber(1, 1000);
+	}
+
+	/*p.diametr = p.EnterCorrectDiameter();*/
+
 	cout << "Enter the value for pipe repair (0 - not under repair, 1 - under repair): ";
 	p.repair = GetCorrectNumber(0, 1);
 	return in;
 }
-
 ostream& operator <<(ostream& out, const Pipe& pipe) {
 	PRINT_PARAM(cout, pipe.id);
 	PRINT_PARAM(cout, pipe.name);
@@ -25,7 +72,7 @@ ostream& operator <<(ostream& out, const Pipe& pipe) {
 	return out;
 }
 ofstream& operator << (ofstream& file, const Pipe& pipe) {
-	file << pipe.id<< endl;
+	file << pipe.id << endl;
 	file << pipe.name << endl;
 	file << pipe.lenght << endl;
 	file << pipe.diametr << endl;
@@ -33,7 +80,8 @@ ofstream& operator << (ofstream& file, const Pipe& pipe) {
 	return file;
 }
 ifstream& operator >> (ifstream& file, Pipe& pipe) {
-	file>> pipe.id;
+	Pipe::NextId = 1;
+	file >> pipe.id;
 	file >> ws;
 	getline(file, pipe.name);
 	file >> pipe.lenght;
@@ -41,34 +89,4 @@ ifstream& operator >> (ifstream& file, Pipe& pipe) {
 	file >> pipe.repair;
 	Pipe::NextId = (Pipe::NextId < pipe.id) ? pipe.id : Pipe::NextId;
 	return file;
-}
-
-
-
-int Pipe::GetId()const { return id; }
-
-
-int Pipe::GetNextId(){
-	return NextId;
-}
-//void Pipe::SetNextId(int newNextId) {
-//	NextId = newNextId;
-//}
-int Pipe::NextId = 0;
-Pipe::Pipe() {
-	id =++ NextId;
-}
-void Pipe::ChangeStatus(Pipe& pipe) {
-	pipe.repair = !pipe.repair;
-}
-
-std::string Pipe::GetThePipeName() const
-{
-	return name;
-}
-
-
-bool Pipe::ReturningThePipeRepair() const
-{
-	return repair;
 }
