@@ -11,7 +11,7 @@
 #include "Cs.h"
 #include "utils.h"
 #include "Graph.h"
-
+class Graph;
 struct Edge
 {
 	int id_out;
@@ -35,6 +35,8 @@ public:
 	void Writing_to_file();
 	void Read_from_file();
 	void ConnectingStations();
+	void ViewShortestDistance();
+	void MaxFlow();
 	void EditPipe();
 	void EditCS();
 	void ShowConnections();
@@ -44,8 +46,16 @@ public:
 	std::unordered_set<int> SearchFreePipesByDiameters(int diameter);
 	void ConnectStations(int id_out, int id_in, int id_pipe);
 	void DeleteConnection(int id_pipe);
+	bool IsPipeConnected(int id_object);
+	bool IsCSConnected(int id_cs);
 	std::vector<int> TopologicalSorting();
+	std::unordered_map<int, double> ShortestDistance(int id_cs);
 
+	Graph InitGraph();
+	bool PipeExist(int id_pipe);
+	bool CSExist(int id_cs);
+	bool IsPipeObjectsEmpty();
+	bool IsCSObjectsEmpty();
 private:
 	std::unordered_map<int, Pipe> pipe_map;
 	std::unordered_map<int, Cs> cs_map;

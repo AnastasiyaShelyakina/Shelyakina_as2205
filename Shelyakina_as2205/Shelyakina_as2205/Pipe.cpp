@@ -29,13 +29,24 @@ int Pipe::GetDiameter() const
 {
 	return diametr;
 }
+double Pipe::GetLength() const
+{
+	return status ? lenght : DBL_MAX;
+}
 int Pipe::GetId()const { return id; }
 void Pipe::SetDiameter(int d)
 {
 	diametr = d;
 }
+string Pipe::PrintStatus() const
+{
+	return status ? "In repair" : "In Working condition";
 
-
+}
+double Pipe::GetCapacity() const
+{
+	return status ? lenght : 0;
+}
 Pipe::Pipe() {
 	id =++ NextId;
 }

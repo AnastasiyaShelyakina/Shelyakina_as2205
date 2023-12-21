@@ -47,9 +47,13 @@ void GasTransportationSystem::ConnectStations(int id_out, int id_in, int id_pipe
 		cout << "Stations with this IDs not found\n";
 }
 
+
+
+
+
 vector<int> GasTransportationSystem::TopologicalSorting()
 {
-	Graph graph(cs_map,connections);
+	Graph graph = InitGraph();
 	vector<int> result;
 	result.reserve(cs_map.size());
 	if (graph.isDAG())
@@ -57,9 +61,67 @@ vector<int> GasTransportationSystem::TopologicalSorting()
 	return result;
 
 }
+unordered_map<int, double> GasTransportationSystem::ShortestDistance(int id_cs)
+{
+	Graph graph(cs_map, pipe_map, connections);
+	return graph.Dijkstra(id_cs);
+}
 
 
+Graph GasTransportationSystem::InitGraph()
+{
+	Graph graph(cs_map, pipe_map, connections);
+	return graph;
+}
 
+
+bool GasTransportationSystem::IsPipeObjectsEmpty()
+{
+	if (pipe_map.size() == 0) {
+		cout << "System has no pipes!\n";
+		return true;
+	}
+	return false;
+}
+
+bool GasTransportationSystem::IsCSObjectsEmpty()
+{
+	if (cs_map.size() == 0) {
+		cout << "System has no stations!\n";
+		return true;
+	}
+	return false;
+}
+bool GasTransportationSystem::PipeExist(int id_pipe)
+{
+	if (pipe_map.contains(id_pipe))
+		return true;
+	return false;
+}
+
+bool GasTransportationSystem::CSExist(int id_cs)
+{
+	if (cs_map.contains(id_cs))
+		return true;
+	cout << "Station not found!\n";
+	return false;
+}
+
+bool GasTransportationSystem::IsPipeConnected(int id_pipe)
+{
+	if (connections.contains(id_pipe))
+		return true;
+	return false;
+}
+
+bool GasTransportationSystem::IsCSConnected(int id_cs)
+{
+	for (auto& [id, edge] : connections) {
+		if (edge.id_in == id_cs || edge.id_out == id_cs)
+			return true;
+	}
+	return false;
+}
 
 
 void GasTransportationSystem::Writing_to_file() {
@@ -71,7 +133,7 @@ void GasTransportationSystem::Writing_to_file() {
 	if (!file)
 		cout << "file is not found" << endl;
 	else {
-		file << pipe_map.size() << " " << cs_map.size()<< connections.size() << endl;
+		file << pipe_map.size() << " " << cs_map.size()<< " " << connections.size() << endl;
 		for (const auto& [key, pipe] : pipe_map) {
 			file << pipe;
 		}
@@ -494,6 +556,11 @@ int EnterPipesID()
 	cout << "Enter ID of pipe: ";
 	return GetCorrectNumber(1, INT_MAX);
 }
+int EnterStationsID()
+{
+	cout << "Enter ID of cs: ";
+	return GetCorrectNumber(1, INT_MAX);
+}
 void GasTransportationSystem::DeleteConnection(int id_pipe) {
 
 	if (connections.contains(id_pipe)) {
@@ -505,7 +572,59 @@ void GasTransportationSystem::DeleteConnection(int id_pipe) {
 		cout << "Connection not found!\n";
 
 }
+void OutputDistance(unordered_map<int, double>& distances, int id_second_cs)
+{
+	if (distances.at(id_second_cs) == DBL_MAX)
+		cout << "no way\n";
+	else
+		cout << distances.at(id_second_cs) << "\n";
+}
+void GasTransportationSystem::ViewShortestDistance() 
+{
+	Graph graph = InitGraph();
+	cout << "Enter the id station you want to search from: ";
+	int id_first_cs = GetCorrectNumber(1, INT_MAX);
+	if (IsCSConnected(id_first_cs)) {
+		unordered_map<int, double> found_distances = graph.Dijkstra(id_first_cs);
+		cout << "Distance to one station or for all? (\"1\" - one, \"0\" - all): ";
+		if (GetCorrectNumber(0, 1)) {
+			int id_second_cs = EnterStationsID();
+			if (IsCSConnected(id_second_cs)) {
+				cout << "Distance to the station " << id_second_cs
+					<< ": ";
+				OutputDistance(found_distances, id_second_cs);
 
+
+
+			}
+
+		}
+		else {
+			for (auto& [id_second_cs, dist] : found_distances) {
+				cout << "Distance to the station " << id_second_cs
+					<< ": ";
+				OutputDistance(found_distances, id_second_cs);
+
+			}
+		}
+
+	}
+	else
+		cout << "Station not in graph!\n";
+}
+
+void GasTransportationSystem::MaxFlow() 
+{
+	Graph graph = InitGraph();
+	int id_out, id_in;
+	EnteringIDs(id_out, id_in);
+	if (IsCSConnected(id_out) && IsPipeConnected(id_in))
+	{
+		cout << "Maximum flow from station " << id_out << " to "
+			<< "station " << id_in << ": " << graph.FordFulkerson(id_out, id_in) << "\n";
+	}
+
+}
 void GasTransportationSystem::ConnectingStations()
 {
 	MenuConnectingStations();

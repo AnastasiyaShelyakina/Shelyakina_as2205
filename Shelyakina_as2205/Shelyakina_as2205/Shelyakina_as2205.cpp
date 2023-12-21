@@ -39,8 +39,10 @@ int main()
 		cout << "6. Save" << endl;
 		cout << "7. Load" << endl;
 		cout << "8. Conactions" << endl;
-		cout << "9. Exit" << endl;
-		switch (GetCorrectNumber(1,9))
+		cout << "9. ShortestDistance" << endl;
+		cout << "10. MaxFlow" << endl;
+		cout << "11. Exit" << endl;
+		switch (GetCorrectNumber(1,11))
 		{
 		case 1:
 		{
@@ -85,6 +87,16 @@ int main()
 			break;
 		}
 		case 9:
+		{
+			GST.ViewShortestDistance();
+			break;
+		}
+		case 10:
+		{
+			GST.MaxFlow();
+			break;
+		}
+		case 11:
 		{
 			return false;
 		}

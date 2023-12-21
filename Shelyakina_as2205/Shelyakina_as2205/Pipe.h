@@ -13,7 +13,7 @@ private:
 	static int NextId;
 	static int pipe_diameters[];
 public:
-
+	bool status;
 	static int EnterCorrectDiameter();
 
 
@@ -24,13 +24,14 @@ public:
 	int GetDiameter() const;
 	void SetDiameter(int d);
 
-
+	double GetLength() const;
+	double GetCapacity() const;
 	int GetId() const;
 	void ChangeStatus(Pipe& pipe);
 
 	std::string GetThePipeName() const;
 	static int GetNextId();
-
+	std::string PrintStatus() const;
 
 
 	bool ReturningThePipeRepair() const;

@@ -29,6 +29,14 @@ public:
     }
 };
 
+template <typename T>
+T Min(T A, T B)
+{
+    if (A <= B)
+        return A;
+    else
+        return B;
+}
 
 template <typename T>
 bool ObjectsExist(const T& objects)
